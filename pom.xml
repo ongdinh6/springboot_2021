@@ -14,7 +14,7 @@
     <name>cellphone-app</name>
     <description>Cellphone Web Application Using SpringBoot</description>
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>8</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -176,6 +176,13 @@
             <version>2.5</version>
         </dependency>
         <!--CKFinder end -->
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.23</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -183,6 +190,11 @@
                 <groupId>com.heroku.sdk</groupId>
                 <artifactId>heroku-maven-plugin</artifactId>
                 <version>3.0.3</version>
+                <configuration>
+                    <processTypes>
+                        <web>java $JAVA_OPTS -cp target/classes:target/dependency/* CellphoneAppApplication</web>
+                    </processTypes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -234,11 +246,10 @@
                     </execution>
                 </executions>
                 <dependencies>
-                    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-jpamodelgen -->
                     <dependency>
                         <groupId>org.hibernate</groupId>
                         <artifactId>hibernate-jpamodelgen</artifactId>
-                        <version>5.5.7.Final</version>
+                        <version>5.4.19.Final</version>
                     </dependency>
                 </dependencies>
             </plugin>
