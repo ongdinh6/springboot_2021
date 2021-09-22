@@ -213,7 +213,7 @@
             <plugin>
                 <groupId>org.bsc.maven</groupId>
                 <artifactId>maven-processor-plugin</artifactId>
-                <version>2.0.5</version>
+                <version>5.0-jdk8-rc3</version>
                 <executions>
                     <execution>
                         <id>process</id>
@@ -229,10 +229,12 @@
                     </execution>
                 </executions>
                 <dependencies>
+                    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-jpamodelgen -->
                     <dependency>
                         <groupId>org.hibernate</groupId>
                         <artifactId>hibernate-jpamodelgen</artifactId>
-                        <version>WORKING</version>
+                        <version>5.5.7.Final</version>
+                        <scope>provided</scope>
                     </dependency>
                 </dependencies>
             </plugin>
