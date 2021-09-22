@@ -227,33 +227,33 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.bsc.maven</groupId>
-                <artifactId>maven-processor-plugin</artifactId>
-                <version>5.0-jdk8-rc3</version>
-                <executions>
-                    <execution>
-                        <id>process</id>
-                        <goals>
-                            <goal>process</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-<!--                        <configuration>-->
-<!--                            <processors>-->
-<!--                                <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>-->
-<!--                            </processors>-->
-<!--                        </configuration>-->
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.hibernate</groupId>
-                        <artifactId>hibernate-jpamodelgen</artifactId>
-                        <version>5.4.19.Final</version>
-<!--                        <scope>provided</scope>-->
-                    </dependency>
-                </dependencies>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.bsc.maven</groupId>-->
+<!--                <artifactId>maven-processor-plugin</artifactId>-->
+<!--                <version>5.0-jdk8-rc3</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>process</id>-->
+<!--                        <goals>-->
+<!--                            <goal>process</goal>-->
+<!--                        </goals>-->
+<!--                        <phase>generate-sources</phase>-->
+<!--&lt;!&ndash;                        <configuration>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <processors>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </processors>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </configuration>&ndash;&gt;-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--                <dependencies>-->
+<!--                    <dependency>-->
+<!--                        <groupId>org.hibernate</groupId>-->
+<!--                        <artifactId>hibernate-jpamodelgen</artifactId>-->
+<!--                        <version>5.4.19.Final</version>-->
+<!--&lt;!&ndash;                        <scope>provided</scope>&ndash;&gt;-->
+<!--                    </dependency>-->
+<!--                </dependencies>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>com.mysema.maven</groupId>
                 <artifactId>maven-apt-plugin</artifactId>
@@ -270,6 +270,33 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+<!--            -->
+            <plugin>
+                <groupId>org.bsc.maven</groupId>
+                <artifactId>maven-processor-plugin</artifactId>
+                <version>2.2.4</version>
+                <executions>
+                    <execution>
+                        <id>process</id>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <processors>
+                                <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+                            </processors>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.hibernate</groupId>
+                        <artifactId>hibernate-jpamodelgen</artifactId>
+                        <version>4.3.6.Final</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
