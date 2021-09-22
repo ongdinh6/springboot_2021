@@ -239,7 +239,6 @@
                         <groupId>org.hibernate</groupId>
                         <artifactId>hibernate-jpamodelgen</artifactId>
                         <version>5.5.7.Final</version>
-                        <scope>provided</scope>
                     </dependency>
                 </dependencies>
             </plugin>
