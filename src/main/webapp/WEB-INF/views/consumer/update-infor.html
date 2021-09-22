@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout/consumer-layout.html}"
+    th:with="isUserPage=true">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/my-css/custom-my-account-detail.css}">
+    <style>
+        .bg-dark {
+            background: #B0B435 !important;
+        }
+
+        form .show-message {
+            font-size: 1.2rem;
+        }
+
+        form .show-message.error {
+            background-color: #c1002a;
+        }
+
+        form .show-message.success {
+            background-color: #05c148;
+        }
+    </style>
+</th:block>
+
+<body>
+    <th:block layout:fragment="body">
+        <!-- Start All Title Box -->
+        <div class="all-title-box">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>Cập nhật thông tin</h2>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a th:href="@{/user/my-account}">Tài khoản của tôi</a></li>
+                            <li class="breadcrumb-item active">Cập nhật thông tin</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End All Title Box -->
+        <!-- Start Contact Us  -->
+        <div class="contact-box-main">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10 col-sm-12">
+                        <div class="contact-form-right userinfo-form p-0">
+                            <div class="bg-dark p-4">
+                                <h2 class="text-light">THÔNG TIN TÀI KHOẢN</h2>
+                            </div>
+                            <form id="update-info-form" class="p-4">
+                                <div class="row">
+                                    <div class="col-md-6 h-75 mb-3">
+                                        <div class="form-group mb-3">
+                                            <label>Họ tên người dùng: </label>
+                                            <input type="text" class="form-control" id="fullName" name="fullName"
+                                                th:value="${not #strings.isEmpty(#authentication.getPrincipal().getUser().fullName)?#authentication.getPrincipal().getUser().fullName:''}"
+                                                placeholder="Nhập Họ và Tên">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 h-75 mb-3">
+                                        <div class="form-group mb-3">
+                                            <label>Số điện thoại:</label>
+                                            <input type="text" class="form-control" id="phone" name="phone"
+                                                th:value="${not #strings.isEmpty(#authentication.getPrincipal().getUser().phone)?#authentication.getPrincipal().getUser().phone:''}"
+                                                placeholder="Nhập số điện thoại">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 h-75 mb-3">
+                                        <div class="form-group mb-3">
+                                            <label>Ngày tháng năm sinh:</label>
+                                            <input type="date" class="form-control" id="birth" name="birth"
+                                                th:value="${#authentication.getPrincipal().getUser().birth!=null?#authentication.getPrincipal().getUser().toStringBirth():''}">
+
+
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 h-75 mb-3">
+                                        <div class="form-group mb-3">
+                                            <label>Giới tính:</label>
+                                            <div class="d-flex form-control p-0">
+                                                <div class="col-6 custom-control custom-radio">
+                                                    <input id="gender-female" name="gender" type="radio" value="Nữ"
+                                                        th:checked="${#strings.equals(#authentication.getPrincipal().getUser().gender,'Nữ')}"
+                                                        class="custom-control-input" required>
+                                                    <label class="custom-control-label" for="gender-female">Nữ</label>
+                                                </div>
+                                                <div class="col-6 custom-control custom-radio">
+                                                    <input id="gender-male" name="gender" type="radio" value="Nam"
+                                                        th:checked="${#strings.equals(#authentication.getPrincipal().getUser().gender,'Nam')}"
+                                                        class="custom-control-input" required>
+                                                    <label class="custom-control-label" for="gender-male">Nam</label>
+                                                </div>
+                                                <!--                                            <div class="col-md-4 d-flex">-->
+                                                <!--                                                <input type="radio" class="form-control w-25" id="male"-->
+                                                <!--                                                       name="gender" placeholder="Subject"-->
+                                                <!--                                                       data-error="Please enter your Subject" value="Male">-->
+                                                <!--                                                <span class="gender-text pl-2">Nam</span>-->
+                                                <!--                                            </div>-->
+                                            </div>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
+                                    <!--                                <div class="col-md-12 h-75">-->
+                                    <!--                                    <div class="form-group mb-3">-->
+                                    <!--                                        <label>Số điện thoại:</label>-->
+                                    <!--                                        <input type="text" class="form-control" id="subject" name="name"-->
+                                    <!--                                               placeholder="Subject" required data-error="Please enter your Subject"-->
+                                    <!--                                               value="0358058540">-->
+                                    <!--                                        <div class="help-block with-errors"></div>-->
+                                    <!--                                    </div>-->
+                                    <!--                                </div>-->
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Địa chỉ:</label>
+                                            <textarea class="form-control" name="address" id="address" rows="4"
+                                                data-error="Write your address" placeholder="Nhập địa chỉ của bạn"
+                                                th:text="${not #strings.isEmpty(#authentication.getPrincipal().getUser().address)?#authentication.getPrincipal().getUser().address:''}"></textarea>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        <div class="submit-button text-center">
+                                            <div id="show-message"
+                                                class="my-3 h-100 text-center show-message text-light">
+                                            </div>
+                                            <button class="btn hvr-hover" id="submit" type="submit">Cập nhật</button>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Cart -->
+    </th:block>
+    <th:block layout:fragment="scripts">
+        <script th:src="@{/js/my-js/update-infor.js}"></script>
+    </th:block>
+</body>
+
+</html>

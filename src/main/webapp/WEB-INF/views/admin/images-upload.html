@@ -1,0 +1,46 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Ckfinder</title>
+
+</head>
+<body>
+<div id="fileExplorer" style="columns: 120px 7; margin: 10px; display: block">
+    <div class="thumb" th:each="item: ${files}" style="margin: 6px">
+        <img th:src="'http://localhost:8080/images/'+${item.name}" th:alt="thumb" th:title="${item.name}" width="120" height="100"/>
+        <br/>
+        <span th:text="${item.name}"></span>
+    </div>
+</div>
+<script th:src="@{/js/jquery-3.2.1.min.js}" crossorigin="anonymous"></script>
+<script th:src="@{/ckeditor/ckeditor/ckeditor.js}"></script>
+<script th:src="@{/ckfinder/ckfinder.js}"></script>
+<script>
+    $(document).ready(function () {
+        var funcNum = getUrlParam( 'CKEditorFuncNum' );
+        $('#fileExplorer').on('click', 'img', function () {
+            var fileUrl = "http://localhost:8080/images/"+$(this).attr('title');
+            window.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
+            window.close();
+        }).hover(function () {
+            $(this).css('cursor', 'pointer')
+        });
+    });
+    function getUrlParam( paramName ) {
+        var reParam = new RegExp( '(?:[\?&]|&)' + paramName + '=([^&]+)', 'i' );
+        var match = window.location.search.match( reParam );
+        return ( match && match.length > 1 ) ? match[1] : null;
+    }
+
+    function returnFileUrl() {
+        var funcNum = getUrlParam( 'CKEditorFuncNum' );
+        var fileUrl = 'https://patiliyo.com/wp-content/uploads/2017/07/ruyada-kedi-gormek.jpg';
+        window.opener.CKEDITOR.tools.callFunction( funcNum, fileUrl );
+        window.close();
+    }
+</script>
+</body>
+</html>

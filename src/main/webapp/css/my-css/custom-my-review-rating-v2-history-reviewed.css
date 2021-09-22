@@ -1,0 +1,119 @@
+/* desktop, pc */
+.img-order {
+    height: 120px;
+    width: 120px;
+}
+
+.order-item {
+    display: flex;
+
+}
+
+.order-detail {
+    width: 42%;
+}
+
+.content-review {
+    width: 42%;
+}
+
+.action-feedback {
+    width: 16%;
+    justify-content: end;
+}
+
+.star-checked {
+    color: orange;
+
+}
+
+
+/* queries media */
+/* tablet & mobile */
+@media only screen and (max-width: 1024px) {
+
+}
+
+
+/* tablet */
+@media only screen and (min-width: 740px) and (max-width: 1024px) {
+    .order-detail {
+        margin-right: 5px;
+    }
+
+    .content-review {
+        margin-right: 5px;
+    }
+
+    .action-feedback button {
+        margin-top: 113%;
+    }
+
+}
+
+/* mobile */
+@media only screen and (max-width: 740px) {
+    li.search {
+        display: none !important;
+    }
+
+    li.card {
+        padding: 2px !important;
+    }
+
+    div.review-item {
+        padding: 0;
+    }
+
+    .img-order {
+        width: 80px;
+        height: 80px;
+        margin-top: 6%;
+    }
+
+    div.order-item {
+        display: block !important;
+    }
+
+    div.order-detail {
+        width: 100%;
+    }
+
+    .order-detail p.product-order-name {
+        display: none;
+    }
+
+    p.order-status {
+        display: none;
+    }
+
+    p.order-date {
+        display: none;
+    }
+
+    div.content-review {
+        width: 100%;
+    }
+
+    div.action-feedback {
+        width: 100%;
+    }
+
+    div.action-feedback button {
+        float: left !important;
+    }
+
+    div.clearfix {
+        justify-content: center;
+        text-align: center;
+    }
+
+    div.hint-text {
+        display: none;
+    }
+
+    div.pagination {
+        float: left !important;
+    }
+
+}

@@ -1,0 +1,124 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <!-- modal order-detail -->
+    <div th:fragment="modal-order-detail" th:each="orderItem:${orders}" class="modal fade"
+         th:id="${'exampleModal'+orderItem.getId()}" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">Chi tiết đơn hàng</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <!-- modal-body -->
+                        <div class="d-flex flex-column justify-content-center align-items-center" id="order-heading">
+                            <div class="text-uppercase">
+                                <p>CHI TIẾT ĐƠN HÀNG</p>
+                            </div>
+                            <div class="h4">Ngày đặt hàng: <span class="order-date"
+                                                                 th:text="${orderItem.getCreatedDate()}"></span></div>
+                            <div class="pt-1">
+                                <p>Mã đơn hàng số: <b class="text-dark" th:text="${orderItem.getId()}"></b>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="wrapper bg-white">
+                            <h1 class="my-2 border p-0"></h1>
+                            <!-- order item1 -->
+                            <div th:each="orderItemDetail : ${orderItem.getOrderDetails()}"
+                                 class="d-flex justify-content-start align-items-center list py-1">
+                                <div><b th:text="${orderItemDetail.getAmount()}+'px'"></b></div>
+                                <div class="mx-3"><img
+                                        th:src="${orderItemDetail.getProduct().getImg().getHost()+orderItemDetail.getProduct().getImg().getRelativePath()}"
+                                        alt="apple" width="100" height="100">
+                                </div>
+                                <div class="order-item item-detail col-md-10 d-inline-flex">
+                                    <div class="col-md-6"><span th:text="${orderItemDetail.getProduct().getName()}"></span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span th:text="${orderItemDetail.getProduct().getBrand().getName()}"></span>
+                                    </div>
+                                    <div class="col-md-3"><span class="product-price"
+                                                                th:text="${orderItemDetail.getProduct().getPrice()}"></span>/cái
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="pt-2 border-bottom mb-3"></div>
+                            <div class="d-flex justify-content-start align-items-center pl-3">
+                                <div class="text-muted">Tạm tính:</div>
+                                <div class="ml-auto"><label class="product-price"
+                                                            th:text="${orderItem.getTotalPrice()}"></label></div>
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center pl-3">
+                                <div class="text-muted">Phí vận chuyển:</div>
+                                <div class="ml-auto"><label class="product-price" th:text="'0'"></label></div>
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center pb-4 pl-3 border-bottom">
+                                <div class="text-muted">
+                                    <!--                                    <button class="text-white btn btn-danger">50%-->
+                                    <!--                                        Discount-->
+                                    <!--                                    </button>-->
+                                </div>
+                                <div class="text-muted">Giảm giá:</div>
+                                <div class="ml-auto price"> -0 đ</div>
+                            </div>
+                            <div class="d-block justify-content-start align-items-center pl-3 py-3 mb-4 border-bottom">
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <div class="text-muted"> Thành tiền:</div>
+                                    <div class="ml-auto h5"><b class="product-price"
+                                                               th:text="${orderItem.getTotalPrice()}"></b></div>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center">
+                                <div class="text-muted">Hình thức thanh toán:</div>
+                                <div class="ml-auto h5"><b
+                                        th:text="${orderItem.getPayment()}"></b></div>
+                                </div>
+
+                            </div>
+                            <div class="row border rounded p-1 my-3">
+                                <div class="col-md-6 py-3">
+                                    <div class="d-flex flex-column align-items start">
+                                        <b>Thông tin giao hàng</b>
+                                        <p class="text-justify pt-2">
+                                            <b>Khách hàng: </b><span class="client-name"
+                                                                     th:text="${orderItem.getNameOfClient()}"></span><br/>
+                                            <b>Địa chỉ: </b><span class="address-delivery"
+                                                                  th:text="${orderItem.getAddress()}"></span><br/>
+                                        </p>
+                                        <p class="text-justify">
+                                            <b>Số điện thoại: </b><span class="phone-number-delivery"
+                                                                        th:text="${orderItem.getPhoneNumberOfClient()}"></span><br/>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 py-3">
+                                    <div class="d-flex flex-column align-items start">
+                                        <b>Thông tin xuất hóa đơn</b>
+                                        <p class="text-justify pt-2">
+                                            <b>Địa chỉ cửa hàng: </b>Đường số 6, phường Linh Trung, Thành phố Thủ Đức
+                                        </p>
+                                        <p class="text-justify">
+                                            <b>Di Động:</b>&nbsp;0943 976 911
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end model body -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-danger btnDenyModal" th:classappend="${orderItem.getOrderStatus()=='Đang tiếp nhận'?'':'d-none'}" th:id="${'btnDenyOrder-'+orderItem.getId()}">Hủy đơn hàng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end model detail -->
+</div>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/admin-layout.html}" th:with="isHomePage=true">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/admin-static/my/css/admin-index.css}">
+    <link rel="stylesheet" th:href="@{/css/my-css/toast.css}">
+    <style>
+        .toast {
+            animation: slideLeft ease 1.5s, fadeOut linear 1s 5s forwards !important;
+        }
+    </style>
+</th:block>
+<body>
+<main layout:fragment="body">
+    <main class="c-main">
+        <div class="container-fluid pt-5">
+            <h1 class="mt-4">Quản lý ram</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Danh mục quản lý <i class="fas fa-chevron-right p-1"></i>
+                    <span>Tags</span><i class="fas fa-chevron-right p-1"></i>
+                    <b>Ram</b>
+                </li>
+            </ol>
+            <!-- table data -->
+            <div class="container p-0">
+                <div class="fade-in">
+                    <div class="card">
+                        <div class="card-header">
+                            <span><i class="fas fa-list-ul mr-1"></i>Danh sách rom (<span th:text="${roms.size()+'/'+roms.size()}"></span>)</span>
+                            <button type="button" class="btn btn-success float-right" data-toggle="modal"
+                                    data-target="#exampleModalLong">
+                                <i class="fas fa-plus"></i>
+                                Thêm mới rom
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="DataTables_Table_0_wrapper"
+                                 class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                <div class="row mb-4">
+                                    <div class="fomr-group form-inline col-sm-12 col-md-6">
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text"
+                                                   placeholder="Nhập thông tin rom (mã, dung lượng,...)"
+                                                   aria-label="Search" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-success" type="button"><i
+                                                        class="fas fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-bordered col-md-12" id="dataTable"
+                                               cellspacing="0">
+                                            <thead class="col-md-12 thead align-middle text-center">
+                                            <tr>
+                                                <th class="col-md-1 col2">Mã</th>
+                                                <th class="col-md-1 col3">Dung lượng</th>
+                                                <th class="col-md-1 col2">Active</th>
+                                                <th class="col-md-1 col3">Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="col-md-12">
+                                            <!-- tr1 -->
+                                            <tr th:each="rom:${roms}">
+                                                <td class="text-center align-middle col-md-1 col2"><b
+                                                        class="col-md-3" th:text="${rom.id}"></b>
+                                                </td>
+                                                <td class="text-center align-middle col-md-3 col2" th:text="${rom.capacity}">
+                                                </td>
+                                                <td class="col-md-1 col1 text-center text-wrapper align-middle">
+                                                    <span th:classappend="${rom.active == 1 ?'badge badge-success' : 'badge badge-danger'}" th:text="${rom.active == 1 ? 'Active' : 'Inactive'}"></span>
+                                                </td>
+                                                <td class="col-md-1 col2 text-center text-wrapper align-middle">
+                                                    <a class="btn btn-success text-light"
+                                                       data-toggle="modal" th:data-target="${'#exampleModalLong'+rom.id}">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a class="btn btn-danger text-light btnRemoveRoms" th:value="${rom.id}" data-toggle="modal"
+                                                       data-target="#exampleModalConfirmDelete">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- paging -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal add new rom -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Thông tin rom</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- start form product info-->
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Dung lượng rom</label>
+                                    <input type="text" class="form-control" id="inputCapacity"
+                                           placeholder="Nhập dung lượng rom (2 GB)">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Active</label>
+                                <select class="form-control" id="inputActive">
+                                    <option value="1">Active</option>
+                                    <option value="-1">Inactive</option>
+                                </select>
+                            </div>
+                        </form>
+                        <!-- end form product info -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-success btnAddTagsSubmit">Lưu thay đổi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </th:block>
+        <!-- end div modal product info-->
+        <!-- Modal -->
+        <th:block th:each="rom:${roms}">
+            <div class="modal fade" th:id="${'exampleModalLong'+rom.id}" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Thông tin rom</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- start form product info-->
+                            <form>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label>Dung lượng rom</label>
+                                        <input type="text" class="form-control" th:id="${'inputCapacity'+rom.id}"
+                                               th:value="${rom.capacity}" placeholder="Nhập dung lượng rom (2 GB)">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Active</label>
+                                    <select th:id="${'inputActive'+rom.id}" class="form-control">
+                                        <option th:selected="${rom.active == 1?true:false}" value="1">Active</option>
+                                        <option th:selected="${rom.active != 1?true:false}" value="-1">Inactive</option>
+                                    </select>
+                                </div>
+                            </form>
+                            <!-- end form product info -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+                            <button type="button" class="btn btn-success btnTagsEdit" th:value="${'roms-'+rom.id}">Lưu
+                                thay đổi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+        <!-- end div modal product info-->
+    </main>
+</main>
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/my-js/admin-tags-management.js}"></script>
+    <script th:src="@{/js/my-js/toast-setup.js}"></script>
+</th:block>
+</body>
+</html>

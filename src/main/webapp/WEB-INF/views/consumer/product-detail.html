@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/consumer-layout.html}" th:with="isProductPage=true">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/my-css/shop-detail.css}">
+    <style>
+        #more {display: none;}
+        img{
+            width:100%!important;
+        }
+    </style>
+</th:block>
+<body>
+<!-- Start Shop Detail  -->
+<div layout:fragment="body">
+    <!-- Start All Title Box -->
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Chi Tiết Sản Phẩm</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/product}">Sản phẩm</a></li>
+                        <li class="breadcrumb-item active" th:text="${product.name}"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+    <div class="shop-detail-box-main">
+        <div class="container">
+            <div class="row">
+                <th:block th:replace="/consumer/product-detail-fragments/summary :: summary"></th:block>
+                <th:block th:replace="/consumer/product-detail-fragments/specification :: specification"></th:block>
+                <th:block th:replace="/consumer/product-detail-fragments/description :: description"></th:block>
+
+                </div>
+                <th:block th:replace="/consumer/product-detail-fragments/reviews :: reviews"></th:block>
+            </div>
+            <div th:replace="/consumer/product-detail-fragments/related-products :: related-products"></div>
+        </div>
+        <hr/>
+    </div>
+    <div id="sample-comment-reply-form" class="comment-box add-comment reply-box mt-3">
+        <div class="row">
+            <div class="col-md-1 text-center">
+                <img src="/images/user-icon.png" alt="" class="img-fluid rounded-circle iconUser"/>
+            </div>
+            <div class="col-md-11">
+                <p class="w-100 h-auto">
+                </p>
+                <div class="clearfix">
+                    <textarea name="content" rows="1"></textarea>
+                    <div class="form-group" id="rating">
+                        <p class="mt-1 ">
+                            <button data-review-id="" type="submit"
+                                    class="btn-comment-submit float-right btn hvr-hover text-light ml-2"><i
+                                    class="fa fa-reply"></i> Bình luận
+                            </button>
+                            <button class="float-right btn hvr-hover text-light ml-2 btn-comment-cancel">Hủy bỏ
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="sample-comment-reply"  class="comment-box replied">
+        <span class="commenter-pic">
+                                                <img src="/images/user-icon.png" class="img-fluid">
+                                            </span>
+        <span class="commenter-name">
+                                                <a href="#">Happy markuptag</a> <span class="comment-time">2 hours
+                                                    ago</span>
+                                            </span>
+        <p class="comment-txt more">Suspendisse massa enim, condimentum sit amet maximus
+            quis, pulvinar sit amet ante. Fusce eleifend dui mi, blandit vehicula orci
+            iaculis ac.</p>
+    </div>
+    <div id="toast">
+
+    </div>
+</div>
+
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/jquery.simpleLoadMore.js}"></script>
+    <script th:src="@{/js/Jquery.autoResize.js}"></script>
+    <script th:src="@{/js/my-js/format-price-of-product.js}"></script>
+    <script th:src="@{/js/my-js/add-to-cart.js}"></script>
+    <script th:src="@{/js/my-js/favorite.js}"></script>
+    <script th:src="@{/js/my-js/shop-detail-custom.js}"></script>
+    <script>
+        function readMoreAction() {
+            var dots = document.getElementById("dots");
+            var moreText = document.getElementById("more");
+            var btnText = document.getElementById("btnMore");
+
+            if (dots.style.display === "none") {
+                dots.style.display = "inline";
+                btnText.innerHTML = "Xem Thêm";
+                moreText.style.display = "none";
+            } else {
+                dots.style.display = "none";
+                btnText.innerHTML = "Rút gọn";
+                moreText.style.display = "inline";
+            }
+        }
+    </script>
+</th:block>
+</body>
+</html>

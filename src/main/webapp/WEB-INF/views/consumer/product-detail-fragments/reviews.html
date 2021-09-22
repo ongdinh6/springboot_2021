@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="reviews">
+    <div class="container">
+        <div class="container my-5">
+            <p class="font-weight-bold maintitle">
+            <h2 class="font-weight-bold">ĐÁNH GIÁ SẢN PHẨM</h2>
+            </p>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="comments">
+                    <div th:each="review:${reviews}" class="comment-box">
+                                <span class="commenter-pic">
+                                    <img src="/images/user-icon.png" class="img-fluid">
+                                </span>
+                        <span class="commenter-name">
+                                                            <a th:text="${review.user.fullName}">Happy markuptag</a>
+                            <span th:text="${review.toStringCreatedDate()}" class="comment-time">
+                            </span>
+                            <span class="comment-time"><i class="fas fa-star"
+                                                          th:each="item : ${#numbers.sequence(1,review.stars)}"></i>
+                            </span>
+                                                        </span>
+                        <p th:text="${review.content}" class="comment-txt more"></p>
+                        <div class="comment-meta">
+                            <button th:attr="data-review-id=${review.id}"
+                                    class="comment-reply reply-popup btn hvr-hover text-light mt-1">
+                                <i class="fa fa-reply" aria-hidden="true"></i>Trả lời
+                            </button>
+                        </div>
+                        <div th:each="comment:${review.comments}" class="comment-box replied">
+                                    <span class="commenter-pic">
+                                        <img src="/images/user-icon.png" class="img-fluid">
+                                    </span>
+                            <span class="commenter-name">
+                                        <a th:text="${comment.user.fullName}" ></a> <span th:text="${comment.toStringCreatedDate()}" class="comment-time"></span>
+                                    </span>
+                            <p th:text="${comment.content}" class="comment-txt more"></p>
+                        </div>
+                    </div>
+                    <!--                        <div class="comment-box add-comment reply-box mt-3">-->
+                    <!--                            <div class="row">-->
+                    <!--                                <div class="col-md-1 text-center">-->
+                    <!--                                    <img src="  http://placehold.it/60x60 " alt=" "-->
+                    <!--                                         class=" rounded-circle iconUser"/>-->
+                    <!--                                </div>-->
+                    <!--                                <div class="col-md-11">-->
+                    <!--                                    <p class="w-100 h-auto">-->
+                    <!--                                    </p>-->
+                    <!--                                    <div class="clearfix">-->
+                    <!--                                        <textarea name="content" rows="1"></textarea>-->
+                    <!--                                        <p class="mt-1 ">-->
+                    <!--                                            <button type="submit"-->
+                    <!--                                                    class="float-right btn hvr-hover text-light ml-2"><i-->
+                    <!--                                                    class="fa fa-reply"></i> Nhận xét-->
+                    <!--                                            </button>-->
+                    <!--                                            <button-->
+                    <!--                                                    class="float-right btn hvr-hover text-light ml-2">Hủy bỏ-->
+                    <!--                                            </button>-->
+                    <!--                                        </p>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+
+                    <!--                    <div class="comment-box">-->
+                    <!--                                <span class="commenter-pic">-->
+                    <!--                                    <img src="http://placehold.it/60x60" class="img-fluid">-->
+                    <!--                                </span>-->
+                    <!--                        <span class="commenter-name">-->
+                    <!--                                    <a href="#">Happy markuptag</a> <span class="comment-time">2 hours ago</span>-->
+                    <!--                                </span>-->
+                    <!--                        <p class="comment-txt more">Suspendisse massa enim, condimentum sit amet maximus-->
+                    <!--                            quis,-->
+                    <!--                            pulvinar sit amet ante. Fusce eleifend dui mi, blandit vehicula orci iaculis ac.-->
+                    <!--                        </p>-->
+                    <!--                        <div class="comment-meta">-->
+                    <!--                            <button class="comment-reply reply-popup btn hvr-hover text-light mt-1"><i-->
+                    <!--                                    class="fa fa-reply" aria-hidden="true"></i>Trả lời-->
+                    <!--                            </button>-->
+                    <!--                        </div>-->
+                    <!--                       -->
+                    <!--                        <div class="comment-box replied">-->
+                    <!--                                    <span class="commenter-pic">-->
+                    <!--                                        <img src="http://placehold.it/60x60" class="img-fluid">-->
+                    <!--                                    </span>-->
+                    <!--                            <span class="commenter-name">-->
+                    <!--                                        <a href="#">Happy markuptag</a> <span class="comment-time">2 hours-->
+                    <!--                                            ago</span>-->
+                    <!--                                    </span>-->
+                    <!--                            <p class="comment-txt more">Suspendisse massa enim, condimentum sit amet maximus-->
+                    <!--                                quis, pulvinar sit amet ante. Fusce eleifend dui mi, blandit vehicula orci-->
+                    <!--                                iaculis ac.</p>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="comment-box replied">-->
+                    <!--                                    <span class="commenter-pic">-->
+                    <!--                                        <img src="http://placehold.it/60x60" class="img-fluid">-->
+                    <!--                                    </span>-->
+                    <!--                            <span class="commenter-name">-->
+                    <!--                                        <a href="#">Happy markuptag</a> <span class="comment-time">2 hours-->
+                    <!--                                            ago</span>-->
+                    <!--                                    </span>-->
+                    <!--                            <p class="comment-txt more">Suspendisse massa enim, condimentum sit amet maximus-->
+                    <!--                                quis, pulvinar sit amet ante. Fusce eleifend dui mi, blandit vehicula orci-->
+                    <!--                                iaculis ac.</p>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                </div>
+            </div>
+        </div>
+        <hr/>
+    </div>
+</th:block>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/consumer-layout.html}" th:with="isUserPage=true">
+
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/my-css/my-account.css}">
+        <link rel="stylesheet" th:href="@{/css/my-css/toast.css}">
+    </th:block>
+</head>
+
+<body>
+<th:block layout:fragment="body">
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Tài khoản của tôi</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">Tài khoản của tôi</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <th:block th:if="${NO_ACTIVE}">
+        <div class="container">
+            <div class="row">
+                <div class="warning-active col-sm-8 col-12 col-sm-12 col-xs-12 text-light mt-1 p-5">
+                    <h2 class="text-light font-weight-bold">CẢNH BÁO: XÁC THỰC EMAIL<br/></h2>
+                    <div class="des">
+                            <span>Bạn chưa xác thực tài khoản
+                                <br/> * Lưu ý : Chi có những tài khoản đã xác thực thì mới có thể tiến hành đặt
+                                hàng.</br>
+                            </span>
+                    </div>
+                    <button id="active-email" class="btn hvr-hover text-light my-1">
+                        GỬI MÃ XÁC THỰC
+                    </button>
+                </div>
+            </div>
+        </div>
+    </th:block>
+    <div class="my-account-box-main">
+        <div class="container pb-5">
+            <div class="my-account-page">
+                <div class="row">
+                    <div class="col-lg-4 col-md-12">
+                        <div class="account-box">
+                            <div class="service-box">
+                                <div class="service-icon">
+                                    <a th:href="@{/user/my-order}"> <i class="fa fa-gift"></i> </a>
+                                </div>
+                                <div class="service-desc">
+                                    <h4>Đơn hàng của tôi</h4>
+                                    <p>Theo dõi đơn hàng của bạn, hủy đơn hàng</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12">
+                        <div class="account-box">
+                            <div class="service-box">
+                                <div class="service-icon">
+                                    <a th:href="@{/user/update-infor}"><i class="far fa-address-card"></i> </a>
+                                </div>
+                                <div class="service-desc">
+                                    <h4>Xem &amp; chỉnh sửa thông tin cá nhân</h4>
+                                    <p>Cập nhật ngày sinh, địa chỉ và số điện thoại</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12">
+                        <div class="account-box">
+                            <div class="service-box">
+                                <div class="service-icon">
+                                    <a th:href="@{/user/review/pending}"> <i class="far fa-comment"></i> </a>
+                                </div>
+                                <div class="service-desc">
+                                    <h4>Nhận xét của tôi</h4>
+                                    <p>Đánh giá và xem lại những đánh giá của bạn</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12">
+                        <div class="account-box">
+                            <div class="service-box">
+                                <div class="service-icon">
+                                    <a th:href="@{/user/favorite}"> <i class="far fa-heart"></i> </a>
+                                </div>
+                                <div class="service-desc">
+                                    <h4>Danh sách yêu thích</h4>
+                                    <p>Sản phẩm xem sau, yêu thích</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12">
+                        <div class="account-box">
+                            <div class="service-box">
+                                <div class="service-icon">
+                                    <a th:href="@{/user/update-password}"> <i class="fa fa-lock"></i> </a>
+                                </div>
+                                <div class="service-desc">
+                                    <h4>Đổi mật khẩu</h4>
+                                    <p>Mật khẩu đủ mạnh để xác thực</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12">
+                        <div class="account-box">
+                            <div class="service-box">
+                                <div class="service-icon">
+                                    <a th:href="@{/logout}"> <i class="fas fa-sign-out-alt"></i> </a>
+                                </div>
+                                <div class="service-desc">
+                                    <h4>Đăng xuất</h4>
+                                    <p>Thoát khỏi tài khoản</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End My Account -->
+    <!--    <div id="toast">-->
+    <!--    </div>-->
+</th:block>
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/my-js/toast-setup.js}"></script>
+    <script>
+        $('#active-email').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/user/request-vertify-email",
+                contentType: "text/plain",
+                beforeSend: function () {
+                    showWarning("Đang xử lý", "Mong bạn hãy chờ đợi giây lát, hệ thống đang xử lý");
+                },
+                success: function (response) {
+                    switch (response) {
+                        case "error":
+                            showError("Hệ thống", "Hệ thống đã xảy ra lỗi bạn hãy thử lại");
+                            break;
+                        case "errsendmail":
+                            showError("Hệ thống", "Đã xảy ra lỗi khi email, bạn hãy thử yêu cầu gửi mã xác thực lần nữa");
+                            break;
+                        case "success":
+                            showSuccess("Thành công", "Hãy kiểm tra email của bạn")
+                            break;
+                        default:
+                            showError("Hệ thống", "Hệ thống đã xảy ra lỗi bạn hãy thử lại");
+                            break;
+                    }
+                }
+                , error: function (request, status, error) {
+                    showError("Hệ thống", "Hệ thống đã xảy ra lỗi bạn hãy thử lại");
+                }
+            });
+        })
+
+    </script>
+</th:block>
+</body>
+
+</html>

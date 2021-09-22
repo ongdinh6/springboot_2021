@@ -1,0 +1,264 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <!-- Start Log In Modal-->
+    <div th:fragment="login-modal" class="modal fade" id="signInModel" tabindex="-1" role="dialog"
+         aria-labelledby="signInModelTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class=" modal-title ml-3 font-weight-bold" id="signInModelTitle">Đăng Nhập</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form id="login-form">
+                            <p class="mt-1 mb-1 font-weight-bold">Tài Khoản:</p>
+                            <input type="email" id="email" name="email" class="mb-3 form-control"
+                                   placeholder="Nhập Tài Khoản" required="" autofocus="true">
+                            <p class="mt-3 mb-1 font-weight-bold">Mật Khẩu:</p>
+                            <div class="form-group">
+                                <div class="input-group" id="show_hide_password">
+                                    <input type="password" id="password" name="password" autocomplete="off" class="form-control mb-3"
+                                           placeholder="Nhập Mật Khẩu" required="">
+                                    <div class="input-group-append pt-1 pl-1 m-0">
+                                        <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="show-login-message" class="h-100 text-center show-message text-light success">
+                            </div>
+                            <button id="btn-login"
+                                    class="rounded-lg my-3 mt-2 btn-lg btn hvr-hover text-light col-sm-12 rounded-lg"
+                                    type="submit">Đăng Nhập
+                            </button>
+
+                            <div class="row">
+                                <div class="col-6 mx-auto">
+                                    <p class="text-center font-weight-bold"><a href="#" class="mx-auto"
+                                                                               data-toggle="modal"
+                                                                               data-target="#forgetPass"
+                                                                               data-dismiss="modal"
+                                                                               aria-label="Close">Quên
+                                        Mật Khẩu</a></p>
+                                </div>
+                                <div class="col-6 mx-auto">
+                                    <p class="text-center font-weight-bold">
+                                        <a href="#" class="mx-auto" data-toggle="modal"
+                                           data-target="#createAccountModel" data-dismiss="modal"
+                                           aria-label="Close">Đăng Ký</a>
+                                </div>
+                                <!--                                -->
+                                <div id="unblockRequest" class="col-12 mx-auto my-2 bg-warning d-none">
+                                    <p class="text-center font-weight-bold"><a href="#" class="mx-auto"
+                                                                               style="color: darkred;"
+                                                                               data-toggle="modal"
+                                                                               data-target="#requestUnblockForm"
+                                                                               data-dismiss="modal"
+                                                                               aria-label="Close">
+                                        YÊU CẦU MỞ KHÓA TÀI KHOẢN
+                                    </a></p>
+                                </div>
+                                <!--                                -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Finish  Log In  Modal-->
+    <!-- Start Sign Up Modal-->
+    <div th:fragment="register-modal" class="modal fade" id="createAccountModel" tabindex="-1" role="dialog"
+         aria-labelledby="createAccountModelTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class=" modal-title ml-3 font-weight-bold" id="createAccountModelTitle">Đăng Ký</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form id="register-form">
+                            <p class="mt-1 mb-1 font-weight-bold">Email:</p>
+                            <input type="text" name="newemail" id="newemail" class="mb-3 form-control"
+                                   placeholder="Nhập Email" required="" autofocus="true">
+                            <p class="mt-1 mb-1 font-weight-bold">Họ Và Tên:</p>
+                            <input type="text" name="newfullname" id="newfullname" class="mb-3 form-control"
+                                   placeholder="Nhập Họ Và Tên" required="" autofocus="true">
+                            <p class="mt-3 mb-1 font-weight-bold">Giới tính:</p>
+                            <div class="form-check form-check-inline custom-radio">
+                                <input checked class="form-check-input custom-control-input" value="1" type="radio"
+                                       name="newgender" id="inlineRadio1">
+                                <label class="form-check-label custom-control-label" for="inlineRadio1">Nam</label>
+                            </div>
+                            <div class=" form-check form-check-inline  custom-radio">
+                                <input class="form-check-input custom-control-input" value="2" type="radio"
+                                       name="newgender" id="inlineRadio2">
+                                <label class="form-check-label custom-control-label" for="inlineRadio2">Nữ</label>
+                            </div>
+                            <p class="mt-3 mb-1 font-weight-bold">Mật Khẩu:</p>
+                            <input type="password" id="newpassword" name="newpassword" class="mb-3 form-control"
+                                   placeholder="Nhập Mật Khẩu" required="">
+
+                            <p class="mt-3 mb-1 font-weight-bold">Nhập Lại Mật Khẩu:</p>
+                            <input type="password" id="confirmpassword" name="confirmpassword" class="mb-3 form-control"
+                                   placeholder="Nhập Lại Mật Khẩu" required="">
+
+                            <div id="show-register-message" class="h-100 text-center show-message text-light success">
+                            </div>
+                            <button id="btn-register" class="my-4 btn hvr-hover text-light btn-lg col-sm-12 rounded-lg"
+                                    type="submit">Đăng
+                                Ký
+                            </button>
+                            <div class="row">
+                                <div class="col-6 mx-auto">
+                                    <p class="text-center font-weight-bold"><a href="#" class="mx-auto"
+                                                                               data-toggle="modal"
+                                                                               data-target="#forgetPass"
+                                                                               data-dismiss="modal"
+                                                                               aria-label="Close">Quên Mật Khẩu</a></p>
+                                </div>
+                                <div class="col-6 mx-auto">
+                                    <p class="text-center font-weight-bold">
+                                        <a href="#" class="mx-auto" data-toggle="modal" data-target="#signInModel"
+                                           data-dismiss="modal" aria-label="Close">Đăng Nhập</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Finish Sign Up Modal-->
+    <!-- Start Forgot Pass Modal-->
+    <div th:fragment="forgotpass-modal" class="modal fade" id="forgetPass" tabindex="-1" role="dialog"
+         aria-labelledby="forgetPassTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title ml-3 font-weight-bold" id="forgetPassTitle">Quên Mật Khẩu</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form id="forgotpass-form">
+                            <p class="mt-3 mb-1 font-weight-bold">Mã Reset:</p>
+                            <input type="email" name="email" class="mb-3 form-control" placeholder="Nhập Email"
+                                   required="" autofocus="true">
+                            <div id="show-forgotpass-message" class="h-100 text-center show-message text-light success">
+                            </div>
+                            <button id="btn-forgotpass"
+                                    class="my-3 btn-lg btn hvr-hover text-light float-left col-sm-12 rounded-lg"
+                                    type="submit">Lấy Lại Mật Khẩu
+                            </button>
+                            <div class="row">
+                                <div class="col-6 mx-auto">
+                                    <p class="text-center font-weight-bold">
+                                        <a href="#" class="mx-auto" data-toggle="modal"
+                                           data-target="#createAccountModel" data-dismiss="modal"
+                                           aria-label="Close">Đăng Ký</a>
+                                    </p>
+                                </div>
+                                <div class="col-6 mx-auto">
+                                    <p class="text-center font-weight-bold">
+                                        <a href="#" class="mx-auto" data-toggle="modal" data-target="#signInModel"
+                                           data-dismiss="modal" aria-label="Close">Đăng Nhập</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Finish Forgot Pass Modal-->
+    <div th:fragment="forgotpass-modal" class="modal fade" id="requestUnblockForm" tabindex="-1" role="dialog"
+         aria-labelledby="unblockRequestTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title ml-3 font-weight-bold" id="unblockRequestTitle">Yêu cầu mở khóa tài
+                        khoản</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form id="unblockRequestForm">
+                            <p class="mt-3 mb-1 font-weight-bold">Email mở khóa:</p>
+                            <input type="email" name="email" class="mb-3 form-control" placeholder="Nhập Email"
+                                   required="" autofocus="true">
+                            <div id="show-forgotpass-message2"
+                                 class="h-100 text-center show-message text-light success">
+                            </div>
+                            <button id="btn-unlock-submit"
+                                    class="my-3 btn-lg btn hvr-hover text-light float-left col-sm-12 rounded-lg"
+                                    type="submit">GỬI YÊU CẦU
+                            </button>
+                            <div class="row">
+                                <div class="col-6 mx-auto">
+                                    <p class="text-center font-weight-bold">
+                                        <a href="#" class="mx-auto" data-toggle="modal"
+                                           data-target="#createAccountModel" data-dismiss="modal"
+                                           aria-label="Close">Đăng Ký</a>
+                                    </p>
+                                </div>
+                                <div class="col-6 mx-auto">
+                                    <p class="text-center font-weight-bold">
+                                        <a href="#" class="mx-auto" data-toggle="modal" data-target="#signInModel"
+                                           data-dismiss="modal" aria-label="Close">Đăng Nhập</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Start Reset Pass Modal-->
+    <div th:fragment="resetpass-modal" class="modal fade" id="resetPass" tabindex="-1" role="dialog"
+         aria-labelledby="resetPassTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title ml-3 font-weight-bold" id="resetPassTitle">Khôi Phục Mậu Khẩu</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form id="resetpass-form">
+                            <p class="mt-3 mb-1 font-weight-bold">Reset Code:</p>
+                            <input type="text" name="resetcode" id="resetcode" class="mb-3 form-control"
+                                   placeholder="Nhập Reset Code" required="" autofocus="true">
+                            <p class="mt-3 mb-1 font-weight-bold">Mật Khẩu Mới:</p>
+                            <input type="password" name="newpass" id="newpass" class="mb-3 form-control"
+                                   placeholder="Nhập Mật Khẩu Mới" required="" autofocus="true">
+                            <p class="mt-3 mb-1 font-weight-bold">Xác Nhận Mật Khẩu</p>
+                            <input type="password" name="confirmpass" id="confirmpass" class="mb-3 form-control"
+                                   placeholder="Nhập Lại Mật Khẩu" required="" autofocus="true">
+                            <div id="show-resetpass-message" class="h-100 text-center show-message text-light success">
+                            </div>
+                            <button id="btn-resetpass"
+                                    class="my-3 btn-lg btn hvr-hover text-light float-left col-sm-12 rounded-lg"
+                                    type="submit">Đổi mật khẩu
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Finish Reset Pass Modal-->
+</div>

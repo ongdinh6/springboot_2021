@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Site Metas -->
+    <title>Chi tiết đơn hàng</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Site Icons -->
+    <link rel="shortcut icon" th:href="@{images/favicon.ico}" type="image/x-icon">
+    <link rel="apple-touch-icon" th:href="@{images/apple-touch-icon.png}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!-- Site CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" th:href="@{/css/responsive.css}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+    <!-- my-order-custom CSS -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+<div class="order-manager-content">
+    <!-- end header -->
+    <!-- start body order detail page -->
+    <div class="container">
+        <div class="content m-auto col-md-9">
+            <div class="bg-dark p-4">
+                <h2 class="text-light" th:text="${'CHI TIẾT ĐƠN HÀNG MÃ '+order.id}"></h2>
+            </div>
+            <!-- modal order-detail -->
+            <div class="container d-flex justify-content-center p-0">
+                <div class="card card-1 col-md-12 m-0 p-2">
+                    <div class="card-header bg-white">
+                        <div class="media flex-sm-row flex-column-reverse justify-content-between ">
+                            <div class="col my-auto">
+                                <h4 class="mb-0">Cảm ơn bạn đã đặt hàng!</h4>
+                                <h4 class="mb-0">Ngày đặt hàng: <span th:text="${order.createdDate}"></span></h4>
+                                <h4 class="mb-0">Tình trạng đơn hàng: <span class="font-weight-bold" th:text="${order.orderStatus}"></span></h4>
+
+                            </div>
+                            <div class="col-auto text-center my-auto pl-0 pt-sm-4"><img
+                                    class="img-fluid my-auto align-items-center mb-0 pt-3"
+                                    src="/images/logo-bill.png">
+                                <p class="mb-4 pt-0 Glasses">Cửa hàng điện thoại thông minh</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- item1 -->
+                        <div class="row mb-2" th:each="orderItem:${order.orderDetails}">
+                            <div class="col p-0">
+                                <div class="card card-2">
+                                    <div class="card-body p-2">
+                                        <div class="media">
+                                            <div class="sq align-self-center p-0"><img
+                                                    class="img-fluid my-auto align-self-center"
+                                                    th:src="${orderItem.product.img.host+orderItem.product.img.relativePath}"
+                                                    width="135" height="135"/></div>
+                                            <div class="media-body my-auto text-left">
+                                                <div class="row my-auto flex-column flex-md-row">
+                                                    <div class="col-md-5 my-auto">
+                                                            <span class="mb-0 product-name" th:text="${orderItem.product.name}"></span>
+                                                    </div>
+                                                    <div class="col-md-3 my-auto text-center">Thương hiệu:<br/>
+                                                        <span class="product-brand align-middle text-center" th:text="${orderItem.product.brand.name}"></span>
+                                                    </div>
+                                                    <div class="col-md-2 text-center">Số lượng:<br/> <span
+                                                            class="qty" th:text="${orderItem.amount}"></span></div>
+                                                    <div class="col-md-2 text-center">
+                                                            <span class="mb-0 font-weight-bold product-current-price product-price" th:text="${orderItem.product.price}">
+                                                                <br/></span><span>đ/cái</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr class="my-2 ">
+                                        <div class="row mx-1">
+                                            <div class="col-md-12 mb-1">
+                                                    <span> Tổng giá theo sản phẩm:<span>
+                                                            <span class="total-item-price font-weight-bold float-right product-price" th:text="${orderItem.totalPrice}"><span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row invoice ">
+                            <div class="col-md-4">
+                                <p class="mb-1"> Tạm tính : <span class="tamtinh product-price" th:text="${order.totalPrice}"></span></p>
+                                <p class="mb-1"> Khuyến mãi: <span class="tongtien">0 đ</span></p>
+                                <p class="mb-1"> Phí vận chuyển: <span class="ship-price font-weight-bold">0
+                                            đ</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="jumbotron-fluid">
+                            <div class="row justify-content-between ">
+                                <div class="col-auto my-auto ">
+                                    <h2 class="mb-0 font-weight-bold">Thành tiền: </h2>
+                                </div>
+                                <div class="col-auto my-auto ml-auto">
+                                    <h1 class="display font-weight-bold product-price" th:text="${order.totalPrice}"></h1>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- div button deny order -->
+
+<div class="col-md-12 text-center align-middle m-0 p-5">
+    <a class="btn btn-success text-light col-md-2" th:href="@{/admin}">Quay lại trang admin</a>
+</div>
+
+<!-- ALL JS FILES -->
+<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/js/my-js/format-price-of-product.js}"></script>
+<script th:src="@{js/custom.js}"></script>
+</body>
+
+
+</html>

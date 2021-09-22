@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout/consumer-layout.html}"
+      th:with="isUserPage=true">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/jquery.rateyo.css}">
+    <link rel="stylesheet" th:href="@{/css/my-css/ratings.css}">
+    <link rel="stylesheet" th:href="@{/css/my-css/review.css}">
+</th:block>
+<body>
+<th:block layout:fragment="body">
+    <!-- Start All Title Box -->
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Nhận Xét Sản Phẩm Đã Mua</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/user/my-account}">Tài khoản của tôi</a></li>
+                        <li class="breadcrumb-item active">Nhận Xét Sản Phẩm Đã Mua</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+    <div class="container-fluid px-5 my-5">
+        <div class="tabbable-panel">
+            <div class="row no-gutters">
+                <div class="col-md-2">
+                    <div class="tabbable-line">
+                        <!-- <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                            aria-orientation="vertical">
+                            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home"
+                                role="tab" aria-controls="v-pills-home" aria-selected="true">Sản phẩm chưa đánh giá</a>
+                            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile"
+                                role="tab" aria-controls="v-pills-profile" aria-selected="false">Đánh giá</a>
+                            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages"
+                                role="tab" aria-controls="v-pills-messages" aria-selected="false">Bình luân</a>
+                        </div> -->
+                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                             aria-orientation="vertical">
+                            <a class="nav-link active" id="v-pills--tab" th:href="@{/user/review/pending}">Sản phẩm chưa đánh
+                                giá</a>
+                            <a class="nav-link" id="v-pills-profile-tab" th:href="@{/user/review/}">Đánh giá</a>
+<!--                            <a class="nav-link" id="v-pills-messages-tab" th:href="@{/user/review/}">Bình luân</a>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="tab-content h-100 w-100 ml-1 mr-5" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                             aria-labelledby="v-pills-home-tab">
+                            <div class="row ">
+                                <div class="col-lg-4 col-md-12 pending-review-order-detail"
+                                     th:each="orderDetail:${orderDetails}">
+                                    <div
+                                            th:attr="data-created-date=${orderDetail.order.toStringCreatedDate()},data-order-detail-id=${orderDetail.id}"
+                                            class="account-box">
+                                        <div class="service-box">
+                                            <div class="service">
+                                                <a href="my-order.html">
+                                                    <img th:src="${orderDetail.product.img.host+orderDetail.product.img.relativePath}"
+                                                         class="order-detail-product-img img-fluid" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="service-desc">
+                                                <h4 class="order-detail-product-name"
+                                                    th:text="${orderDetail.product.name}">SamSung Galaxy J7</h4>
+                                                <a class="order order-detail-order-id"
+                                                   th:text="${'Mã đơn hàng: '+orderDetail.getOrder().id}"
+                                                   href="my-order.html">Mã đơn hàng</a>
+                                                <a class="open-review-form my-3 mt-2 btn-lg btn hvr-hover text-light col-sm-12 rounded-lg">
+                                                    Viết Nhận Xét</a>
+                                                <!--                                                data-toggle="modal" data-target="#review-modal"-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <th:block th:if="${totalPages>1}">
+            <div class="my-5 clearfix d-flex justify-content-center">
+                <ul class="pagination">
+                    <th:block th:if="${currentPage != 1}">
+                        <li th:class="page-item">
+                            <a class="page-link w-100" th:href="@{/user/review/pending}">Trang đầu</a>
+                        </li>
+                        <li th:class="page-item">
+                            <a class="page-link" aria-label="Previous"
+                               th:href="@{/user/review/pending(page=${currentPage - 1})}"
+                               title='Go to previous page'><span aria-hidden="true">«</span>
+                                <span class="sr-only">Previous</span></a>
+                        </li>
+                    </th:block>
+                    <li th:each="item : ${#numbers.sequence(1,totalPages)}"
+                        th:class="${item == currentPage ? 'page-item active' :'page-item' }">
+                        <a class="page-link" th:href="@{/user/review/pending(page = ${item})}"> <span
+                                th:text='${item}'></span>
+                        </a>
+                    </li>
+                    <th:block th:if="${currentPage != totalPages}">
+                        <li th:class="page-item">
+                            <a class="page-link" aria-label="Next"
+                               th:href="@{/user/review/pending(page =${currentPage + 1})}"
+                               title='Go to next page'><span
+                                    aria-hidden="true">»</span> <span class="sr-only">Next</span></a>
+                        </li>
+                        <li th:class="page-item">
+                            <a class="page-link w-100"
+                               th:href="@{/user/review/pending(page=${totalPages})}">Trang cuối</a>
+                        </li>
+                    </th:block>
+                </ul>
+            </div>
+        </th:block>
+    </div>
+    <!-- Start Review Modal -->
+    <div class="modal fade" id="review-modal" tabindex="-1" role="dialog" aria-labelledby="review-modalTitle"
+         aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="h-100 write-review-img">
+                        <img id="product-img" src="" class="w-100 h-auto" alt="">
+                    </div>
+                    <div class="ml-3 h-100 w-100">
+                        <h5 class="font-weight-bold m-0 p-0">SamSung Galyxy A54</h5>
+                        <small>Mua ngày 19/4/2021</small>
+                        <br>
+                        <strong> Đơn hàng DH17DTA</strong>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form id="review-form" class="w-100 h-100">
+                            <input id="order-detail-id" name="order-detail-id" type="hidden">
+                            <div id="rateYo" class="my-3 mx-auto"></div>
+                            <textarea placeholder="Hãy chia sẻ cảm nhận, đánh giá của bạn về sản phẩm này nhé."
+                                      class="w-100" name="" id="" rows="5"></textarea>
+                            <div id="show-message"
+                                 class="my-3 h-100 text-center show-message text-light">alo
+                            </div>
+                            <button id="submit"
+                                    class="rounded-lg my-3 mt-2 btn-lg btn hvr-hover text-light col-sm-12 rounded-lg"
+                                    type="submit">Gửi Đánh Giá
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Finish Review Modal -->
+</th:block>
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/jquery.rateyo.js}"></script>
+    <script th:src="@{/js/my-js/reviews.js}"></script>
+</th:block>
+</body>
+</html>

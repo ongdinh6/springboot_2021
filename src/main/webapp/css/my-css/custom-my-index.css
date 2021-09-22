@@ -1,0 +1,369 @@
+.carousel-caption h1 {
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 50px;
+    color: white;
+}
+
+.carousel {
+    /* background: url("/images/screenshoot.png"); */
+    height: 100%;
+}
+
+.carousel-caption {
+    right: 0 !important;
+    left: 0 !important;
+    top: 25% !important;
+}
+
+.carousel-indicators {
+    position: absolute !important;
+    background: none !important;
+    padding: 3px !important;
+}
+
+.carousel-indicators li {
+    width: 50px !important;
+    height: 0.1rem !important;
+}
+
+.carousel-control-prev {
+    text-align: left !important;
+    width: auto !important;
+    margin-left: 10px;
+}
+
+.carousel-control-prev i {
+    padding: 20px;
+    background-color: black;
+}
+
+.carousel-control-next i {
+    padding: 20px;
+    background-color: black;
+}
+
+.carousel-control-next {
+    text-align: right !important;
+    width: auto !important;
+    margin-right: 10px;
+}
+
+.title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 40px;
+}
+
+/* content special product */
+.content-att button {
+    display: none;
+}
+
+.content-att:hover img {
+    height: 210px;
+}
+
+div.content-att:hover button {
+    display: initial;
+}
+
+div.content-att h1 {
+    margin-top: 25px;
+    font-size: 19px;
+}
+
+.left {
+    width: 25%;
+    height: auto;
+    text-align: center;
+}
+
+.left1 {
+    width: 100%;
+    padding: 30px;
+    background-color: #f4f4f4;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    height: 350px;
+    margin-bottom: 5px;
+}
+
+.left2 {
+    width: 100%;
+    padding: 30px;
+    background-color: #f4f4f4;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    height: 350px;
+    margin-bottom: 5px;
+}
+
+.left img {
+    height: 200px;
+}
+
+.center {
+    width: 50%;
+    background-color: #f4f4f4;
+    border-radius: 20px;
+}
+
+.center button {
+    display: none;
+}
+
+div.center:hover img {
+    height: 550px;
+}
+
+div.center:hover button {
+    display: initial;
+}
+
+.right {
+    width: 25%;
+    height: auto;
+    text-align: center;
+}
+
+.right1 {
+    width: 100%;
+    padding: 30px;
+    background-color: #f4f4f4;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    margin-bottom: 5px;
+    height: 350px;
+}
+
+.right2 {
+    width: 100%;
+    padding: 30px;
+    background-color: #f4f4f4;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    height: 350px;
+    margin-bottom: 5px;
+}
+
+.right img {
+    height: 200px;
+}
+
+/* slider tai tro */
+.instagram-box {
+    background: url("/images/screenshoot.png");
+}
+
+/* Queries media */
+/* tablet & phone width < 1024 */
+@media only screen and (max-width: 1024px) {
+}
+
+/* tablet 740<= width < 1024px */
+@media only screen and (min-width: 740px) and (max-width: 1024px) {
+    .left {
+        width: 25%;
+        height: auto;
+        text-align: center;
+    }
+
+    .left1 {
+        width: 100%;
+        border-radius: 10px;
+        margin: 5px;
+        padding: 2rem;
+        height: 215px;
+    }
+
+    .content-att h1 {
+        font-size: 15px !important;
+    }
+
+    .left2 {
+        width: 100%;
+        border-radius: 10px;
+        margin: 5px;
+        padding: 2rem;
+        height: 215px;
+    }
+
+    .left img {
+        height: 80px;
+    }
+
+    .center {
+        width: 50%;
+        background-color: #f4f4f4;
+        margin-left: 15px !important;
+        margin-right: 15px;
+        margin-top: 4px;
+    }
+
+    .center img {
+        height: 300px;
+    }
+
+    .center h1 {
+        font-size: 20px;
+    }
+
+    .right {
+        width: 25%;
+        height: auto;
+        text-align: center;
+    }
+
+    .right1 {
+        width: 100%;
+        border-radius: 10px;
+        margin: 5px;
+        padding: 2rem;
+        height: 215px;
+    }
+
+    .right2 {
+        width: 100%;
+        border-radius: 10px;
+        margin: 5px;
+        padding: 2rem;
+        height: 215px;
+    }
+
+    .right img {
+        height: 80px;
+    }
+
+    div.content-att button {
+        display: none;
+    }
+
+    div.content-att:hover img {
+        height: 80px;
+    }
+
+    div.content-att:hover button {
+        display: none;
+    }
+
+    div.center:hover img {
+        height: 300px;
+    }
+
+    div.center:hover button {
+        display: none;
+    }
+}
+
+/* phone width < 740px */
+@media only screen and (max-width: 740px) {
+    .carousel-control-prev i {
+        padding: 10px;
+        font-size: 8px;
+        background-color: black;
+    }
+
+    .carousel-control-next i {
+        padding: 10px;
+        font-size: 8px;
+        background-color: black;
+    }
+
+    .carousel-indicators li {
+        width: 25px !important;
+        height: 0.1rem !important;
+    }
+
+    /* content special product */
+    .content {
+        display: block !important;
+    }
+
+    .left {
+        width: 100%;
+        height: auto;
+        text-align: center;
+        display: flex;
+    }
+
+    .left1 {
+        width: 50%;
+        border-radius: 10px;
+        margin: 5px;
+        padding: 2rem;
+        height: auto;
+    }
+
+    .content-att h1 {
+        font-size: 15px !important;
+    }
+
+    .left2 {
+        width: 50%;
+        border-radius: 10px;
+        margin: 5px;
+        padding: 2rem;
+        height: auto;
+    }
+
+    .left img {
+        height: 80px;
+    }
+
+    .center {
+        width: 97%;
+        background-color: #f4f4f4;
+        margin-right: 15px;
+    }
+
+    .center img {
+        height: 200px;
+    }
+
+    .center h1 {
+        font-size: 20px;
+    }
+
+    .right {
+        width: 100%;
+        height: auto;
+        text-align: center;
+        display: flex;
+    }
+
+    .right1 {
+        width: 50%;
+        border-radius: 10px;
+        margin: 5px;
+        padding: 2rem;
+        height: auto;
+    }
+
+    .right2 {
+        width: 50%;
+        border-radius: 10px;
+        margin: 5px;
+        padding: 2rem;
+        height: auto;
+    }
+
+    .right img {
+        height: 80px;
+    }
+
+    .content-att:hover img {
+        height: 80px;
+    }
+
+    div.content-att:hover button {
+        display: none;
+    }
+
+    div.center:hover img {
+        height: 200px;
+    }
+
+    div.center:hover button {
+        display: none;
+    }
+}

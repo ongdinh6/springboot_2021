@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/admin-layout.html}" th:with="isHomePage=true">
+
+<th:block layout:fragment="css">
+    <style>
+        .toast {
+            animation: slideLeft ease 1.5s, fadeOut linear 1s 5s forwards !important;
+        }
+    </style>
+</th:block>
+
+<body class="sb-nav-fixed">
+<main layout:fragment="body">
+    <main class="c-main">
+        <div class="container-fluid pt-5">
+            <h1 class="mt-4">Quản lý người dùng</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Danh mục quản lý <i class="fas fa-chevron-right p-1"></i>
+                    <b>Người dùng</b>
+                </li>
+            </ol>
+            <!-- table data -->
+            <div class="container p-0">
+                <div class="fade-in">
+                    <div class="card">
+                        <div class="card-header">
+                            <span><i class="fa fa-users mr-1"></i>Danh sách người dùng</span>
+                            <button class="btn btn-success float-right" data-toggle="modal"
+                                    data-target="#modalAddNewUser"><i class="fa fa-plus mr-1"></i>Thêm mới
+                                người dùng
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="DataTables_Table_0_wrapper"
+                                 class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                <div class="row mb-4">
+                                    <div class="fomr-group form-inline col-sm-12 col-md-6">
+                                        <div class="dataTables_length" id="DataTables_Table_0_length">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text"
+                                                   placeholder="Nhập thông tin người dùng (tên, email,...)"
+                                                   aria-label="Search" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-success" type="button"><i
+                                                        class="fas fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-bordered col-md-12" id="dataTable"
+                                               cellspacing="0">
+                                            <thead class="col-md-12 thead align-middle text-center">
+                                            <tr>
+                                                <th class="col-md-2 col3">Họ và tên</th>
+                                                <th class="col-md-3 col3">Địa chỉ email</th>
+                                                <th class="col-md-2 col2">Số điện thoại</th>
+                                                <th class="col-md-1 col2">Role</th>
+                                                <th class="col-md-1 col1">Active</th>
+                                                <th class="col-md-3 col2">Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="col-md-12">
+                                            <!-- tr1 -->
+                                            <tr th:each="user:${users}">
+                                                <td class="text-center align-middle col-md-2">
+                                                    <b th:text="${user.fullName}"></b>
+                                                </td>
+                                                <td class="text-center align-middle col-md-3" th:text="${user.email}">
+                                                </td>
+                                                <td class="text-center align-middle col-md-2" th:text="${user.phone}">
+                                                </td>
+                                                <td class="text-center align-middle col-md-1"
+                                                    th:text="${user.role == 1?'USER':'ADMIN'}">
+                                                    <!--                                                    <select th:id="${user.id}" class="form-select form-select-lg selectAction">-->
+                                                    <!--                                                        <option th:selected="${user.role == 1} ? true :false" th:value="1">USER</option>-->
+                                                    <!--                                                        <option th:selected="${user.role == 2} ? true :false" th:value="2">ADMIN</option>-->
+                                                    <!--                                                    </select>-->
+                                                </td>
+                                                <td class="col-md-1 col1 text-center text-wrapper align-middle">
+                                                    <span class="badge badge-success"
+                                                          th:text="${user.active == 1 ? 'Active' : (user.active == 0 ?'Active':'Inactive')}">Active</span>
+                                                </td>
+                                                <td class="col-md-3 text-center text-wrapper align-middle p-0 m-0">
+                                                    <div class="col-md-12 d-flex">
+                                                        <div class="col-md-8 m-0 p-0">
+                                                            <a class="btn btnRemove text-light"
+                                                               th:classappend="${user.active == 1?'btn-danger':'btn-success'}"
+                                                               th:id="${user.id}"
+                                                               th:text="${user.active == 1 ?'Khoá': ((user.active == 0) ? 'Mở khóa': 'Khóa')}"></a>
+                                                        </div>
+                                                        <div class="type-lb col-md-4 m-0 p-0">
+                                                            <div th:if="${user.isRequestUnblock == true}">
+                                                            <p style="background-color: whitesmoke; color: red" class="sale mt-1">Yêu cầu!</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div id="toast"></div>
+</main>
+
+<!-- script -->
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/my-js/admin-user-management.js}"></script>
+    <script>
+        $('#btnSubmitAddNewProduct').click(function () {
+            var user = [[${userNew}]]
+            var data = {
+                "fullName": user.fullName,
+                "emailAddress": user.emailAddress,
+                "password": user.password,
+                "role": user.role,
+                "active": user.active
+            }
+
+            $.post({
+                data: JSON.stringify(data),
+                url: '/admin/users-manage/new',
+                success: function (rs) {
+                    $('#modalAddNewUser').toggle("modal");
+                },
+                error: function (rs) {
+                    showErrorMessage("Thất bại", "Thông tin người dùng không hợp lệ!")
+                }
+            })
+        })
+
+        //update user
+
+    </script>
+    <script>
+        $('.selectAction').on('change', function () {
+            //ways to retrieve selected option and text outside handler
+            $.ajax({
+                type: 'PUT',
+                url: "/admin/users-manage/" + $(this).prop('id'),
+                data: {role: this.value},
+                success: function (result) {
+                    showSuccessMessage(result);
+                }
+            })
+        });
+    </script>
+</th:block>
+
+
+</body>
+
+
+</html>

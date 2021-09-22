@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Site Metas -->
+    <title>Freshshop - Ecommerce Bootstrap 4 HTML Template</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{'/css/bootstrap.min.css'}">
+    <style>
+        header {
+            background-color: #b0b435;
+            height: 200px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #b48535;
+        }
+
+        a:hover {
+            padding: 10px 10px;
+            text-decoration: none;
+            color: #b48535;
+        }
+
+        div {
+            margin: 100px 500px;
+            color: #b0b435;
+        }
+
+        footer {
+            background-color: #b0b435;
+            height: 300px;
+        }
+    </style>
+
+</head>
+
+<body>
+<header>
+
+</header>
+<div class="text-center">
+    <p> Bạn đã hoàn thành xác nhận địa chỉ email thành công.</p>
+    <p id="show-message"></p>
+    <a href="#">Bấm vào đây để vào trang chủ</a>
+</div>
+<footer>
+</footer>
+<script>
+    function redirect() {
+        var show = document.getElementById("show-message");
+        var seconds = 5;
+        setInterval(function () {
+            show.textContent = "Bạn sẽ được chuyển hướng vào trang chủ sau " + seconds + " giây";
+            if (seconds == 0) {
+                window.location.href = '/';
+            }
+            seconds--;
+        }, 1000);
+    }
+    window.addEventListener('load', redirect(), false);
+</script>
+</body>
+
+</html>

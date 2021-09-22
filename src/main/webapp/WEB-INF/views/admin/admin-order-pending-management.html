@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/admin-layout.html}" th:with="isHomePage=true">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{extensions/sticky-header/bootstrap-table-sticky-header.css}">
+    <link rel="stylesheet" th:href="@{extensions/fixed-columns/bootstrap-table-fixed-columns.css}">
+    <style>
+        .toast {
+            animation: slideLeft ease 1.5s, fadeOut linear 1s 5s forwards !important;
+        }
+    </style>
+</th:block>
+
+
+<body class="sb-nav-fixed">
+<main layout:fragment="body">
+    <main class="c-main">
+        <div class="container-fluid pt-5">
+            <h1 class="mt-4">Quản lý đơn hàng</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Danh mục quản lý <i class="fas fa-chevron-right p-1"></i>
+                    <span>Đơn hàng</span>
+                    <i class="fas fa-chevron-right p-1"></i>
+                    <b>Chờ xử lý</b>
+                </li>
+            </ol>
+            <!-- table data -->
+            <div class="container p-0">
+                <div class="fade-in">
+                    <div class="card">
+                        <div class="card-header">
+                                    <span><i class="fa fa-list-alt mr-1"></i>Danh sách đơn hàng chờ xử lý
+                                        (10/125)</span>
+                        </div>
+                        <div class="card-body">
+                            <div id="DataTables_Table_0_wrapper"
+                                 class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                <div class="row mb-4">
+                                    <div class="fomr-group form-inline col-sm-12 col-md-6">
+                                        <div class="dataTables_length" id="DataTables_Table_0_length">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text"
+                                                   placeholder="Nhập thông tin mã đơn hàng" aria-label="Search"
+                                                   aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-success" type="button"><i
+                                                        class="fas fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-bordered col-md-12" id="dataTable"
+                                               cellspacing="0">
+                                            <thead class="col-md-12 thead align-middle text-center">
+                                            <tr>
+                                                <th class="col-md-1 col1">Mã đơn hàng</th>
+                                                <th class="col-md-1 col3">Thông tin khách hàng</th>
+                                                <th class="col-md-3 col2">Ngày đặt hàng</th>
+                                                <th class="col-md-2 col2">Tổng tiền</th>
+                                                <th class="col-md-1 col1">Xem chi tiết</th>
+                                                <th class="col-md-2 col2">Chấp nhận/Từ chối</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="col-md-12">
+                                            <!-- tr1 -->
+                                            <tr th:each="order:${orders}">
+                                                <td class="text-center align-middle col-md-1 col1"><b
+                                                        class="col-md-3" th:text="${order.id}"></b>
+                                                </td>
+                                                <td class="text-left col-md-3 col3">
+                                                    <small><b>Khách hàng tên: </b> <span
+                                                            th:text="${order.nameOfClient}"></span></small><br/>
+                                                    <small>Địa chỉ: <span
+                                                            th:text="${order.address}"></span></small></br>
+                                                    <small>Số điện thoại: <span
+                                                            th:text="${order.phoneNumberOfClient}"></span></small></br>
+                                                </td>
+                                                <td class="text-center align-middle col-md-3 col2"
+                                                    th:text="${order.createdDate}">
+
+                                                </td>
+                                                <td class="text-center align-middle col-md-2 col2 product-price"
+                                                    th:text="${order.totalPrice}">
+                                                </td>
+                                                <td class="col-md-1 col1 text-center text-wrapper align-middle">
+                                                    <a class="btn btn-success" th:href="@{'order-detail?id='+${order.id}}">Xem
+                                                        chi tiết</a>
+                                                </td>
+                                                <td
+                                                        class="col-md-2 col2 text-center text-wrapper align-middle">
+                                                    <a class="btn btnAccept btn-success text-light" th:id="${order.id}">
+                                                        <i class="fas fa-check"></i></a>
+                                                    <a class="btn btnRefuse btn-danger text-light" th:id="${order.id}">
+                                                        <i class="fas fa-times"></i></a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- start toast-->
+                                <div id="toast">
+                                </div>
+                                <!-- end toast-->
+                                <!-- paging -->
+                                <div class="row">
+<!--                                    <div class="col-sm-12 col-md-12 justify-content-center">-->
+<!--                                        <div class="clearfix">-->
+<!--                                            <ul class="pagination float-right">-->
+<!--                                                <li class="page-item"><a href="#" class="page-link">Previous</a>-->
+<!--                                                </li>-->
+<!--                                                <li class="page-item"><a href="#" class="page-link">1</a></li>-->
+<!--                                                <li class="page-item"><a href="#" class="page-link">2</a></li>-->
+<!--                                                <li class="page-item"><a href="#" class="page-link">3</a></li>-->
+<!--                                                <li class="page-item active"><a href="#" class="page-link">4</a>-->
+<!--                                                </li>-->
+<!--                                                <li class="page-item"><a href="#" class="page-link">5</a></li>-->
+<!--                                                <li class="page-item"><a href="#" class="page-link">6</a></li>-->
+<!--                                                <li class="page-item"><a href="#" class="page-link">7</a></li>-->
+<!--                                                <li class="page-item"><a href="#" class="page-link">Next</a>-->
+<!--                                                </li>-->
+<!--                                            </ul>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </main>
+</main>
+<!-- script -->
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/my-js/format-price-of-product.js}"></script>
+    <script th:src="@{/js/my-js/admin-order-management.js}"></script>
+    <script th:src="@{extensions/sticky-header/bootstrap-table-sticky-header.js}"></script>
+    <script th:src="@{extensions/fixed-columns/bootstrap-table-fixed-columns.js}"></script>
+</th:block>
+
+
+</body>
+
+
+</html>

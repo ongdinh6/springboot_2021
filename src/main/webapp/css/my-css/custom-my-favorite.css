@@ -1,0 +1,43 @@
+/* pc desktop */
+.list-price {
+    text-decoration: line-through;
+}
+
+
+/* queries media */
+/* tablet & mobile*/
+@media only screen and (max-width: 1024px) {
+
+
+}
+
+/* tablet */
+@media only screen and (min-width: 740px) and (max-width: 1024px) {
+
+
+}
+
+/* mobile */
+@media only screen and (max-width: 740px) {
+    div.rating {
+        display: none;
+    }
+
+    div.short-description {
+        display: none;
+    }
+
+    span.review-count {
+        display: none;
+    }
+
+    div.hint-text {
+        display: none;
+    }
+
+    div.clearfix ul {
+        margin-left: 50px !important;
+        float: left !important;
+    }
+
+}

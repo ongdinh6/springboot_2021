@@ -1,0 +1,78 @@
+.service-desc > a.order:hover {
+    color: #ced164;
+}
+
+.fa-star {
+    color: #ced164;
+}
+
+.tabbable-panel {
+    /* border: 2px solid #eee; */
+}
+
+.account-box {
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
+
+.tabbable-line > .nav-pills > a {
+    margin-right: 2px;
+    border: 2px solid #eee;
+    margin-right: 0;
+}
+
+.tabbable-line > .nav-pills {
+    color: #a6a6a6;
+}
+
+.tabbable-line > .nav-pills > a.active,
+.tabbable-line > .nav-pills > a:hover {
+    background: none !important;
+    color: #333333;
+    border-bottom: 4px solid #b0b435;
+}
+
+
+.tabbable-line > .nav-pills > li.open > a > i,
+.tabbable-line > .nav-pills > li:hover > a > i {
+    color: #a6a6a6;
+}
+
+.tabbable-line > .nav-pills > li.open .dropdown-menu,
+.tabbable-line > .nav-pills > li:hover .dropdown-menu {
+    margin-top: 0px;
+}
+
+.tabbable-line > .nav-pills > li.active {
+    border-bottom: 4px solid #32465B;
+    position: relative;
+}
+
+.tabbable-line > .nav-pills > li.active > a {
+    border: 0;
+    color: #333333;
+}
+
+.tabbable-line > .nav-pills > li.active > a > i {
+    color: #404040;
+}
+
+.tabbable-panel .col-md-10 {
+}
+
+.tab-content {
+    min-height: 700px;
+
+    background-color: #fff;
+    /* border-left: 2px solid #eee; */
+    padding-bottom: 0;
+}
+
+.write-review-img {
+    width: 100px;
+}
+
+.table-responsive .table td.content-rv {
+    white-space: normal;
+    text-align: left;
+}

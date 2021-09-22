@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/admin-layout.html}" th:with="isHomePage=true">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/admin-static/my/css/admin-index.css}">
+    <link rel="stylesheet" th:href="@{/css/my-css/toast.css}">
+    <link rel="stylesheet" th:href="@{/admin-static/my/css/product-manage.css}">
+    <style>
+        .toast {
+            animation: slideLeft ease 1.5s, fadeOut linear 1s 5s forwards !important;
+        }
+    </style>
+</th:block>
+
+
+<body class="sb-nav-fixed">
+<main layout:fragment="body">
+    <!-- end header -->
+    <!-- start body main -->
+    <main>
+        <div class="container-fluid pt-5">
+            <h1 class="mt-4">Quản lý sản phẩm</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Danh mục quản lý <i class="fas fa-chevron-right p-1"></i>
+                    <b>Sản phẩm</b>
+                </li>
+            </ol>
+            <!-- table data -->
+            <!-- search filter -->
+            <div class="table-filter pb-4">
+                <div class="row ">
+                    <div class="col-sm-3">
+                        <div class="show-entries">
+                            <button type="button" class="btn btn-success" data-toggle="modal"
+                                    data-target="#exampleModalLong">
+                                <i class="fas fa-plus"></i>
+                                Thêm mới sản phẩm
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-sm-9 d-flex justify-content-end">
+                        <div class="input-group float-right col-md-6 p-0">
+                            <input class="form-control " type="text" id="textValueFindBy"
+                                   placeholder="Nhập thông tin sản phẩm (tên, thương hiệu,....)" aria-label="Search"
+                                   aria-describedby="basic-addon2" th:value="${find}">
+                            <div class="input-group-append">
+                                <button class="btn btn-success" type="button" id="btnFindBy"><i
+                                        class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- end search filter -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table mr-1"></i>
+                    <span th:text="'Danh sách sản phẩm (10/'+${sumProductsAmount}+')'"></span>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive col-md-12 p-0">
+                        <table class="table table-bordered col-md-12" id="dataTable" cellspacing="0">
+                            <thead class="col-md-12 thead align-middle text-center">
+                            <tr>
+                                <th class="col-md-1 col1">Mã</th>
+                                <th class="col-md-3 col2">Hình ảnh</th>
+                                <th class="col-md-3 col3">Tên sản phẩm</th>
+                                <th class="col-md-2 col2">Thương hiệu</th>
+                                <th class="col-md-1 col3">Giá niêm yết</th>
+                                <th class="col-md-1 col1">SL</th>
+                                <th class="col-md-1 col1">Active</th>
+                                <th class="col-md-2 col3">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody class="col-md-12">
+                            <!-- tr1 -->
+                            <tr th:each="product: ${listProduct}">
+                                <td class="text-center align-middle col-md-1 col1">
+                                    <b class="col-md-1" th:text="${product.id}"></b>
+                                </td>
+                                <td class="col-md-2 col2">
+                                    <!--/*@thymesVar id="relativePath" type="java"*/-->
+                                    <div th:if="${product.img.relativePath != null}">
+                                    <div th:each="imageURL : ${#strings.arraySplit(product.img.relativePath, '')}">
+                                        <img class="image" height="130" width="140"
+                                             th:if="${!imageURL[0].equals('i')}"
+                                             th:src="*{'data:image/jpeg;base64,'+product.img.relativePath}">
+                                    </div>
+                                </div>
+                                    <div th:if="${product.img.relativePath != null}">
+                                        <div th:each="imageURL : ${#strings.arraySplit(product.img01.relativePath, '')}">
+                                            <img class="image" height="130" width="140"
+                                                 th:if="${imageURL[0].equals('i')}"
+                                                 th:src="${product.img01.host+product.img01.relativePath}">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center align-middle col-md-3 col2">
+                                    <b th:text="${product.name}"></b>
+
+                                </td>
+                                <td class="col-md-1 col2 text-center text-wrapper align-middle">
+                                    <b th:text="${product.brand.name}"></b>
+                                </td>
+                                <td class="col-md-1 col3 text-center text-wrapper align-middle">
+                                    <span class="product-price" th:text="${product.price}"></span>
+                                </td>
+                                <td class="col-md-1 col1 text-center text-wrapper align-middle">
+                                    <span class="product-amount" th:text="${product.amount}"></span>
+                                </td>
+                                <td class="col-md-1 col1 text-center text-wrapper align-middle">
+                                    <th:block th:if="${product.active == 1}">
+                                        <i class="fas fa-check icon float-center">
+                                        </i>
+                                    </th:block>
+                                    <th:block th:if="${product.active != 1}">
+                                        <i class="fas fa-times icon float-center">
+                                        </i>
+                                    </th:block>
+                                </td>
+                                <td class="col-md-1 col2 text-center text-wrapper align-middle">
+                                    <a class="btn btn-success text-light" href="" data-toggle="modal"
+                                       th:data-target="'#exampleModalLong'+${product.id}">
+                                        <i class="fas fa-edit"
+                                        ></i></a>
+                                    <a class="btn btnRemove btn-danger text-light" th:id="'del-'+${product.id}"
+                                       data-toggle="modal"
+                                       data-target="#exampleModalConfirmDelete"><i class="fas fa-trash"></i></a>
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- paging -->
+            <div th:replace="/admin/admin-component/pagination :: pagination"></div>
+            <!-- end paging -->
+        </div>
+    </main>
+
+    <!-- div modal product info-->
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Thông tin sản phẩm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- start form product info-->
+                    <form th:action="@{/admin/products-manage/new}" th:method="POST" th:object="${productInfo}" enctype="multipart/form-data">
+                        <!--                    <form th:object="${productInfo}">-->
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <div class="input-group mb-1 d-flex row-img">
+                                    <div class="input-group-prepend float-left col-md-10">
+                                        <input type="file" class="input-group"
+                                               id="btnUploadImage" th:field="*{img}"/></span>
+                                    </div>
+<!--                                    <a type="input" target="_blank" rel="noopener noreferrer" id="fileImgNewProduct"-->
+<!--                                       class="form-control" placeholder="Đường dẫn liên kết" th:field="*{img}"></a>-->
+                                    <a type="button" id="btnAddMultipleImage" class="btn btn-outline-success text-light float-right"><i class="fa fa-plus"></i> Thêm ảnh</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputProductName">Tên sản phẩm</label>
+                                <input type="text" class="form-control" id="inputProductName"
+                                       placeholder="Nhập tên sản phẩm" th:field="*{name}">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputProductBrand">Thương hiệu</label>
+                                <select id="inputProductBrand" class="form-control" th:field="*{brandID}">
+                                    <option th:each="brand:${allBrands}" th:value="${brand.id}"
+                                            th:text="${brand.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputProductPrice">Giá sản phẩm</label>
+                            <input th:field="*{price}" type="text" class="form-control" id="inputProductPrice"
+                                   placeholder="Nhập giá sản phẩm (24.000.000)">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="inputProductRam">Dung lượng Ram</label>
+                                <select id="inputProductRam" class="form-control" th:field="*{ramID}">
+                                    <option th:each="ram:${allRams}" th:value="${ram.id}"
+                                            th:text="${ram.capacity}"></option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputProductRom">Dung lượng Rom</label>
+                                <select id="inputProductRom" class="form-control" th:field="*{romID}">
+                                    <option th:each="rom:${allRoms}" th:value="${rom.id}"
+                                            th:text="${rom.capacity}"></option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputProductPin">Pin</label>
+                                <select id="inputProductPin" class="form-control" th:field="*{pinID}">
+                                    <option th:each="pin:${allPins}" th:value="${pin.id}"
+                                            th:text="${pin.capacity}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputProductSize">Thông tin màn hình</label>
+                            <input type="text" class="form-control" id="inputProductSize"
+                                   placeholder="Nhập thông tin màn hình" th:field="*{size}">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputProductSelfieCamera">Camera trước</label>
+                                <input type="text" class="form-control" id="inputProductSelfieCamera"
+                                       placeholder="Nhập thông tin camera trước" th:field="*{selfieCamera}">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputProductMainCamera">Camera sau</label>
+                                <input type="text" class="form-control" id="inputProductMainCamera"
+                                       placeholder="Nhập thông tin camera sau" th:field="*{mainCamera}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputProductImgDes1">Mô tả sản phẩm</label>
+                            <textarea class="form-control" id="inputProductImgDes1"
+                                      placeholder="Đường dẫn liên kết" th:field="*{longDescription}"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputProductActive">Active</label>
+                            <select id="inputProductActive" class="form-control" th:field="*{active}">
+                                <option th:value="1">Active</option>
+                                <option th:value="0">Disable</option>
+                            </select>
+                        </div>
+                        <div class="content-for-ckeditor">
+
+                        </div>
+                        <!-- end form product info -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+                            <button id="btnSubmitAddNewProduct" type="submit" class="btn btn-success">Lưu thay đổi
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="toast"></div>
+    <!-- end div modal product info-->
+    <div th:replace="static-fragment/modal-product-info::modal-product-info"></div>
+    <!-- modal confirm delete -->
+    <div class="modal fade" id="exampleModalConfirmDelete" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Xóa sản phẩm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Bạn muốn xóa sản phẩm này ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                    <button id="btnConfirmDelete" type="submit" class="btn btn-primary">Có</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    end modal confrim delete -->
+</main>
+<!-- script -->
+<th:block layout:fragment="scripts">
+    <script th:src="@{/ckfinder/ckfinder.js}"></script>
+    <script th:src="@{/js/my-js/format-price-of-product.js}"></script>
+    <script th:src="@{/js/my-js/modal-add-product.js}"></script>
+    <script th:src="@{/js/my-js/admin-product-management.js}"></script>
+    <script>
+        $('input[type=file]').change(function () {
+            console.log(this.files[0].mozFullPath);
+        });
+        let i = 0;
+        $('#btnAddMultipleImage').click(function () {
+            i+=1;
+            if(i<=4) {
+                $('.row-img').append(
+                    `<div class="input-group-prepend mb-1 float-left col-md-10">
+                     <input type="file" class="input-group"
+                             name="img0${i}"/></span>
+                 </div>`
+                )
+            }else{
+                alert("Đã đủ ảnh!")
+            }
+        })
+    </script>
+</th:block>
+
+
+</body>
+
+
+</html>

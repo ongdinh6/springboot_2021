@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/consumer-layout.html}" th:with="isUserPage=true">
+
+<head>
+    <title th:text="${CONTENT_TITLE}"></title>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" href="../../../css/my-css/custom-my-order-v2.css">
+    </th:block>
+
+</head>
+<body>
+<!-- Start block body -->
+<div layout:fragment="body">
+    <!-- Start All Title Box -->
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="box-manager col-lg-12">
+                    <h2>Đơn hàng của tôi</h2>
+
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/home}">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/user/my-account}" class="option-my-account">My
+                            Account</a></li>
+                        <li class="breadcrumb-item active">Đơn hàng của tôi</li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+
+    <!-- Start Cart  -->
+    <div class="cart-box-main pt-5 pb-0">
+        <div class="container m-auto text-center">
+            <h2>Bạn chưa có đơn hàng nào. Hãy tiếp tục mua sắm bạn nhé!</h2>
+            <div class="img m-auto">
+                <img src="../../../images/cam-ket/empty-cart.png" height="80" width="80"/>
+            </div>
+            <div class="for-btn p-5">
+                <a class="btn hvr-hover text-light" th:href="@{/product}">Tiếp tục mua sắm</a>
+            </div>
+        </div>
+    </div>
+    <!-- end block body -->
+
+    <!-- block file script for shop page -->
+    <th:block layout:fragment="scripts">
+        <script src="../../../js/my-js/format-price-of-product.js"></script>
+        <script src="../../../js/my-js/auto-increment-price.js"></script>
+        <script src="../../../js/my-js/toast.js"></script>
+    </th:block>
+</body>
+
+</html>

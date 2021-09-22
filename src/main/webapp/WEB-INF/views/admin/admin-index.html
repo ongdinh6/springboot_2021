@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{/layout/admin-layout.html}" th:with="isHomePage=true">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/admin-static/my/css/admin-index.css}">
+    <link rel="stylesheet" th:href="@{/css/my-css/toast.css}">
+</th:block>
+
+<body>
+    <main layout:fragment="body">
+        <div class="container-fluid pt-5">
+            <h1 class="mt-4">Dashboard</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+            <div class="row">
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-primary text-white mb-4">
+                        <div class="card-body">Primary Card</div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="#">View Details</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-warning text-white mb-4">
+                        <div class="card-body">Warning Card</div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="#">View Details</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-success text-white mb-4">
+                        <div class="card-body">Success Card</div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="#">View Details</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-danger text-white mb-4">
+                        <div class="card-body">Danger Card</div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="#">View Details</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-line"></i>
+                            Thống kê theo phương thức thanh toán
+                        </div>
+                        <div class="card-body border-1">
+                            <form id="line-bar-chart-form">
+                                <div class="form-group"><select id="typeChart" name="chart-type" class="form-control"
+                                        required>
+                                        <option value="" selected hidden>Loại Biểu Đồ</option>
+                                        <option value="1">Đường</option>
+                                        <option value="2">Cột</option>
+                                    </select>
+                                </div>
+                                <div class="form-group"><select id="type" name="type" class="form-control" required>
+                                        <option value="" selected hidden>Thóng Kê Theo</option>
+                                        <option value="1">Doanh Thu</option>
+                                        <option value="2">Số lượng bán ra</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group"><input name="from-date" class="form-control" type="date"
+                                                required> <span class="form-label"> Từ Ngày</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group"><input name="to-date" class="form-control" type="date"
+                                                required> <span class="form-label"> Đến Ngày</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="my-3 h-100 text-center show-message success">
+                                </div>
+                                <div class="row">
+                                    <button type="submit" class="btn btn-primary btn-block">Gửi</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-bar mr-1"></i>
+                            Biểu đồ
+                        </div>
+                        <div id="line-bar-chart-container" class="card-body">
+                            <canvas id="myLineBarChart" width="100" height="60"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-line"></i>
+                            Thống kê theo thể loại
+                        </div>
+                        <div class="card-body border-1">
+                            <form id="pie-chart-form">
+                                <div class="form-group"><select name="category" class="form-control" required>
+                                        <option selected hidden>Thể Loại</option>
+                                        <option value="1">Hãng</option>
+                                        <option value="2">Pin</option>
+                                        <option value="3">Ram</option>
+                                        <option value="4">Rom</option>
+                                    </select>
+                                </div>
+                                <div class="form-group"><select name="type" class="form-control" required>
+                                        <option selected hidden>Thóng Kê Theo</option>
+                                        <option value="1">Doanh Thu</option>
+                                        <option value="2">Số lượng bán ra</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group"><input name="from-date" class="form-control" type="date"
+                                                required> <span class="form-label"> Từ Ngày</span></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group"><input name="to-date" class="form-control" type="date"
+                                                required> <span class="form-label"> Đến Ngày</span></div>
+                                    </div>
+                                </div>
+                                <div class="my-3 h-100 text-center show-message success">
+                                </div>
+                                <div class="row">
+                                    <button type="submit" class="btn btn-primary btn-block">Gửi</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-8">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-area mr-1"></i>
+                            Biểu Đồ
+                        </div>
+                        <div class="card-body">
+                            <canvas id="myPieChart" width="70%" height="30"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <th:block layout:fragment="scripts">
+        <!--        <script type="text/javascript" th:inline="javascript">-->
+        <!--            /*<![CDATA[*/-->
+        <!--            var barChartProfits = /*[[${barChartProfits}]]*/;-->
+        <!--            var pieChartProfits = /*[[${pieChartProfits}]]*/;-->
+        <!--        /*]]>*/-->
+        <!--        </script>-->
+        <script th:src="@{/admin-static/dist/js/Chart.js}" crossorigin="anonymous"></script>
+        <script th:src="@{/js/my-js/toast-setup.js}"></script>
+        <script th:src="@{/js/my-js/random-color.js}"></script>
+        <script th:src="@{/admin-static/dist/assets/demo/chartjs-plugin-labels.js}"></script>
+        <script th:src="@{/admin-static/dist/assets/demo/index-chart.js}"></script>
+    </th:block>
+
+</body>
+
+</html>

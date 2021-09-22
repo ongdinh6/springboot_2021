@@ -1,0 +1,181 @@
+<header th:fragments="header" class="main-header" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        xmlns:th="http://www.thymeleaf.org">
+    <!-- Start Main Top -->
+    <!-- Start Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+        <div class="container">
+            <!-- Start Header Navigation -->
+            <div class="navbar-header">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu"
+                        aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/dhmobilelogo.png}" class="logo"
+                                                            alt=""></a>
+            </div>
+            <!-- End Header Navigation -->
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-menu">
+                <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                    <li class="nav-item" th:classappend="${isHomePage} ? active: ''"><a class="nav-link" th:href="@{/}">Trang
+                        chủ</a></li>
+                    <th:block th:if="${#authorization.expression('isAuthenticated()') and #strings.contains(#authentication.principal.authorities,'ADMIN')}">
+                        <li class="nav-item"><a class="nav-link"
+                                                th:href="@{/admin}">DashBoard</a></li>
+                    </th:block>
+
+                    <li class="nav-item" th:classappend="${isProductPage} ? active: ''"><a class="nav-link"
+                                                                                           th:href="@{/product}">Sản
+                        phẩm</a></li>
+                    <!--                    <li class="dropdown" th:classappend="${isProductPage} ? active: ''">-->
+                    <!--                        <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"-->
+                    <!--                           aria-haspopup="true" aria-expanded="false">Sản Phẩm</a>-->
+                    <!--                        <ul class="dropdown-menu">-->
+                    <!--                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"-->
+                    <!--                                                            href="#">Hãng<i-->
+                    <!--                                    class="fas fa-caret-down float-right mt-2"></i></a>-->
+                    <!--                                <ul class="dropdown-menu">-->
+                    <!--                                    <a class="dropdown-item" th:each="brand : ${allBrands}"-->
+                    <!--                                       th:href="@{/product(brand=${brand.id})}" th:text="${brand.name}"></a>-->
+                    <!--                                </ul>-->
+                    <!--                            </li>-->
+
+                    <!--                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"-->
+                    <!--                                                            href="#">Ram<i-->
+                    <!--                                    class="fas fa-caret-down float-right mt-2"></i></a>-->
+                    <!--                                <ul class="dropdown-menu">-->
+                    <!--                                    <a class="dropdown-item" th:each="ram : ${allRams}"-->
+                    <!--                                       th:href="@{/product(ram=${ram.id})}" th:text="${ram.capacity}"></a>-->
+                    <!--                                </ul>-->
+                    <!--                            </li>-->
+                    <!--                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"-->
+                    <!--                                                            href="#">Rom<i-->
+                    <!--                                    class="fas fa-caret-down float-right mt-2"></i></a>-->
+                    <!--                                <ul class="dropdown-menu">-->
+                    <!--                                    <a class="dropdown-item" th:each="rom : ${allRoms}"-->
+                    <!--                                       th:href="@{/product(rom=${rom.id})}" th:text="${rom.capacity}"></a>-->
+                    <!--                                </ul>-->
+                    <!--                            </li>-->
+
+                    <!--                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"-->
+                    <!--                                                            href="#">Pin<i-->
+                    <!--                                    class="fas fa-caret-down float-right mt-2"></i></a>-->
+                    <!--                                <ul class="dropdown-menu">-->
+                    <!--                                    <a class="dropdown-item" th:each="pin : ${allPins}"-->
+                    <!--                                       th:href="@{/product(pin=${pin.id})}" th:text="${pin.capacity}"></a>-->
+                    <!--                                </ul>-->
+                    <!--                            </li>-->
+                    <!--                        </ul>-->
+                    <!--                    </li>-->
+                    <!--                    <li class="nav-item"><a class="nav-link" href="about.html">Thông tin</a></li>-->
+                    <!--                    <li class="nav-item"><a class="nav-link" href="contact-us.html">Liên hệ</a></li>-->
+                    <th:block sec:authorize="!isFullyAuthenticated()">
+                        <li class="dropdown">
+                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false"><i class="far fa-user mr-1"></i> Chào,
+                                bạn</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" data-toggle="modal" data-target="#signInModel"> Đăng nhập</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#createAccountModel">Đăng
+                                    ký</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#forgetPass">Quên
+                                    mật
+                                    khẩu</a></li>
+                            </ul>
+                        </li>
+                    </th:block>
+                    <th:block sec:authorize="isFullyAuthenticated()">
+                        <li class="nav-item" th:classappend="${isUserPage}? active:''"><a th:href="@{/user}"
+                                                                                          class="nav-link userSessionForCart"><i
+                                class="far fa-user mr-1"></i>TÀI KHOẢN CỦA
+                            TÔI</a></li>
+                    </th:block>
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+
+            <!-- Start Atribute Navigation -->
+            <div class="attr-nav">
+                <ul>
+                    <li class="search"><a href="#"><i class="fa fa-search"></i>Tìm kiếm</a></li>
+                    <li class="side-menu">
+                        <a href="#">
+                            <i class="fa fa-shopping-bag"></i>
+                            <!--/*@thymesVar id="sumOfCart" type="java"*/-->
+                            <!--                            <th:block th:if="${null != session.currentUser}">-->
+                            <!--                                <span class="badge" id="sumOfCart"-->
+                            <!--                                      th:text="${session.currentUser.getCartItems().size()}"></span>-->
+                            <!--                            </th:block>-->
+                            <span class="badge" id="sumOfCart"
+                                  th:text="${null==session.currentUser?'0':session.currentUser.getCartItems().size()}"></span>
+                            <p>Giỏ hàng</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- End Atribute Navigation -->
+        </div>
+        <!-- Start Side Menu -->
+        <div class="side">
+            <a href="#" class="close-side"><i class="fa fa-times"></i></a>
+            <li class="cart-box">
+                <ul class="cart-list">
+                    <!-- upload cart item using ajax -->
+                    <th:block th:if="${session.currentUser != null}">
+                        <!--/*@thymesVar id="cartItems" type="java"*/-->
+                        <li class="cart-item" th:each="c : ${session.currentUser.getCartItems()}" th:id="'li'+${c.id}">
+                            <a href="#" class="photo">
+                                <img th:src="${c.getProduct().getImg().getHost()+c.getProduct().getImg().getRelativePath()}"
+                                     class="cart-thumb"/></a>
+                            <h6><a href="#" th:text="${c.getProduct().getName()}"></a></h6>
+                            <span th:text="${c.getAmount()}+'x - '"></span>
+                            <span class="product-price li-price" th:text="${c.getProduct().getPrice()}"></span>
+                        </li>
+                        <!--  end upload cart item  -->
+                    </th:block>
+                    <th:block th:if="${session.currentUser == null}">
+                        <li>Đăng nhập để đặt hàng bạn nhé!</li>
+                        <!--/*@thymesVar id="cartItems" type="java"*/-->
+                        <li class="cart-item" th:each="c : ${session.cartItemsSession}"
+                            th:id="'li'+${c.getProduct().getId()}">
+                            <a href="#" class="photo">
+                                <img th:src="${c.getProduct().getImg().getHost()+c.getProduct().getImg().getRelativePath()}"
+                                     class="cart-thumb"/></a>
+                            <h6><a href="#" th:text="${c.getProduct().getName()}"></a></h6>
+                            <span th:text="${c.getAmount()}+'x - '"></span>
+                            <span class="product-price li-price" th:text="${c.getProduct().getPrice()}"></span>
+                        </li>
+                        <!--  end upload cart item  -->
+                    </th:block>
+                </ul>
+                <!--  start li total -->
+                <div class="total p-2">
+                    <a th:href="@{/cart}" class="btn btn-default hvr-hover btn-cart text-light">CHI TIẾT</a>
+                    <span class="float-right"><strong>Tổng</strong>: <!--/*@thymesVar id="totalAll" type="java"*/-->
+                        <th:block th:if="${null != session.currentUser}">
+                         <span class="product-price total-cart" th:text="${session.currentUser.getTotalPrice()}"></span>
+                        </th:block>
+                        <th:block th:if="${null == session.currentUser}">
+                         <span class="product-price total-cart"></span>
+                        </th:block>
+                    </span>
+                </div>
+                <!-- end li total -->
+        </div>
+        <!-- End Side Menu -->
+    </nav>
+    <!-- End Navigation -->
+    <!-- Start Top Search -->
+    <div class="top-search">
+        <div class="container">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                <input id="search" type="submit" class="form-control" placeholder="Search">
+                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+            </div>
+        </div>
+    </div>
+    <!-- End Top Search -->
+
+</header>

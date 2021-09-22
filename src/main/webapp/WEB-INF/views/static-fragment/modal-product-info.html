@@ -1,0 +1,115 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <!-- div modal product info-->
+    <!-- Modal -->
+    <div class="modal fade" th:fragment="modal-product-info" th:each="product:${listProduct}"
+         th:id="'exampleModalLong'+${product.id}" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Thông tin sản phẩm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- start form product info-->
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <div class="input-group mb-1">
+                                    <div class="input-group-prepend">
+                                        <input type="file" class="input-group bordered"
+                                               th:id="'btnUploadImage'+${product.id}" th:text="${product.img.host+product.img.relativePath}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label th:for="'inputProductName'+${product.id}">Tên sản phẩm</label>
+                                <input type="text" class="form-control font-weight-bold"
+                                       th:id="'inputProductName'+${product.id}"
+                                       placeholder="Nhập tên sản phẩm" th:value="${product.name}">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label th:for="'inputProductBrand'+${product.id}">Thương hiệu</label>
+                                <select th:id="'inputProductBrand'+${product.id}" class="form-control">
+                                    <option th:each="brand : ${allBrands}" th:text="${brand.name}"
+                                            th:value="${brand.id}" th:selected="${brand.id==product.brand.id}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label th:for="'inputProductPrice'+${product.id}">Giá sản phẩm</label>
+                            <input type="text" class="form-control product-price"
+                                   th:id="'inputProductPrice'+${product.id}"
+                                   placeholder="Nhập giá sản phẩm (24.000.000)" th:value="${product.price}">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label th:for="'inputProductRam'+${product.id}">Dung lượng Ram</label>
+                                <select th:id="'inputProductRam'+${product.id}" class="form-control">
+                                    <option th:each="ram:${allRams}" th:value="${ram.id}" th:text="${ram.capacity}"
+                                            th:selected="${ram.id == product.ram.id}"></option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label th:for="'inputProductRom'+${product.id}">Dung lượng Rom</label>
+                                <select th:id="'inputProductRom'+${product.id}" class="form-control">
+                                    <option th:each="rom:${allRoms}" th:value="${rom.id}" th:text="${rom.capacity}"
+                                            th:selected="${rom.id == product.rom.id}"></option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label th:for="'inputProductPin'+${product.id}">Pin</label>
+                                <select th:id="'inputProductPin'+${product.id}" class="form-control">
+                                    <option th:each="pin:${allPins}" th:value="${pin.id}" th:text="${pin.capacity}"
+                                            th:selected="${pin.id == product.pin.id}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label th:for="'inputProductSize'+${product.id}">Thông tin màn hình</label>
+                            <input type="text" class="form-control" th:id="'inputProductSize'+${product.id}"
+                                   placeholder="Nhập thông tin màn hình" th:value="${product.size}">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label th:for="'inputProductSelfieCamera'+${product.id}">Camera trước</label>
+                                <input type="text" class="form-control" th:id="'inputProductSelfieCamera'+${product.id}"
+                                       placeholder="Nhập thông tin camera trước" th:value="${product.selfieCamera}">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label th:for="'inputProductMainCamera'+${product.id}">Camera sau</label>
+                                <input type="text" class="form-control" th:id="'inputProductMainCamera'+${product.id}"
+                                       placeholder="Nhập thông tin camera sau" th:value="${product.mainCamera}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label th:for="'inputProductImgDes1'+${product.id}">Mô tả sản phẩm</label>
+                            <textarea type="text" class="form-control ckeditor"
+                                      th:id="'inputProductImgDes1'+${product.id}"
+                                      placeholder="Đường dẫn liên kết" th:utext="${product.longDescription}">
+                            </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label th:for="'inputProductActive'+${product.id}">Active</label>
+                            <select th:id="'inputProductActive'+${product.id}" class="form-control">
+                                <option th:value="1" th:selected="${product.active == 1}">Active</option>
+                                <option th:value="0" th:selected="${product.active == 0}">Disable</option>
+                            </select>
+                        </div>
+                    </form>
+                    <!-- end form product info -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-success">Lưu thay đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end div modal product info-->
+</div>

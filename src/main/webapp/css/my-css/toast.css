@@ -1,0 +1,70 @@
+.toast{
+    position: fixed;
+    top: auto;
+    bottom: 100px;
+    left: 70%;
+    width: 30%;
+    background-color: whitesmoke;
+    box-shadow: 0px 15px 18px #dddddd;
+    padding: 10px 15px 10px 15px;
+    height: 100px;
+    display: flex;
+    align-self: center;
+    z-index: 99999;
+    animation: slideLeft ease .5s, fadeOut linear 1s 5s forwards;
+    font-size: 16px;
+    border: #dddddd solid 1px;
+}
+div.toast.toast--error{
+    border-left: 5px red solid;
+}
+div.toast.toast--success{
+    border-left: 5px green solid;
+}
+div.toast.toast--warning{
+    border-left: 5px yellowgreen solid;
+}
+.toast:hover{
+    box-shadow: 0 35px 38px #dddddd;
+}
+.toast__icon{
+    justify-content: center;
+    align-self: center;
+}
+.toast__content.fas{
+    align-items: center;
+    top: 20%;
+}
+
+.fas.fa-times-circle{
+    color: red;
+}
+.fas.fa-check-circle{
+    color: green;
+}
+.fas.fa-info-circle{
+    color: yellowgreen;
+}
+.toast__content{
+    display: block;
+    align-self: center;
+    flex-grow: 1;
+    min-width: 80%;
+    max-width: 80%;
+    margin: 0px 15px 0px 15px;
+}
+@keyframes slideLeft{
+    from{
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes fadeOut{
+    to{
+        opacity: 0;
+    }
+}

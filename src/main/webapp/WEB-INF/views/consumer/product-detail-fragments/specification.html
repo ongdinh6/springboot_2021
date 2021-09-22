@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" th:with="product=${product}" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="specification">
+    <section class="details-product col-12">
+        <div class="container ">
+            <p class="font-weight-bold maintitle">
+            <h2 class="font-weight-bold">THÔNG TIN CHI TIẾT</h2>
+            </p>
+        </div>
+        <div class="container ">
+            <div class="row ">
+                <div class="col-md-9 ">
+                    <table align="left" cellspacing="0 " cellpadding="20 "
+                           class="table table-bordered table-hover ">
+                        <thead></thead>
+                        <tbody>
+                        <tr class="w-100 ">
+                            <td class="title w-25 ">Thương hiệu</td>
+                            <td class="infor w-75 " th:text="${product.brand.name}"></td>
+                        </tr>
+                        <tr>
+                            <td class="title ">Tên sản phẩm</td>
+                            <td class="infor " th:text="${product.name}">Huawei Nova 3i</td>
+                        </tr>
+                        <tr>
+                            <td class="title ">Màn hình</td>
+                            <td class="infor " th:text="${product.size}">6.3 inches, 2340x1080 pixels</td>
+                        </tr>
+                        <tr>
+                            <td class="title ">Camera sau</td>
+                            <td class="infor " th:text="${product.mainCamera}"></td>
+                        </tr>
+                        <tr>
+                            <td class="title ">Camera trước</td>
+                            <td class="infor " th:text="${product.selfieCamera}">Camera kép 24Mp + 2Mp</td>
+                        </tr>
+                        <tr>
+                            <td class="title ">RAM</td>
+                            <td class="infor " th:text="${product.ram.capacity}"></td>
+                        </tr>
+                        <tr>
+                            <td class="title ">ROM</td>
+                            <td class="infor " th:text="${product.rom.capacity}">128GB</td>
+                        </tr>
+                        <tr>
+                            <td class="title ">Dung lượng pin</td>
+                            <td class="infor " th:text="${product.pin.capacity}">334O mAh</td>
+                        </tr>
+                        <tr>
+                            <td class="title ">Bảo hành</td>
+                            <td class="infor " th:text="${product.warranty+' tháng'}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <hr/>
+    </section>
+</th:block>
+</html>

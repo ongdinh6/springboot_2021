@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" th:with="product=${product}" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="description">
+    <!--/*@thymesVar id="longDescription" type="java"*/-->
+    <section id="product-description mb-5">
+        <div class="container ">
+            <p class="font-weight-bold maintitle">
+            <h2 class="font-weight-bold">MÔ TẢ SẢN PHẨM</h2>
+            </p>
+        </div>
+        <div class="description-more m-0 p-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10 load-more" th:utext="${product.longDescription}">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="more text-center">
+            <span id="dots"></span>
+            <button onclick="readMoreAction()" class="btn hvr-hover text-light centered" id="btnMore">Xem thêm</button>
+        </div>
+    </section>
+    <!-- Finish Product Specification -->
+    <hr/>
+</th:block>
+
+</html>

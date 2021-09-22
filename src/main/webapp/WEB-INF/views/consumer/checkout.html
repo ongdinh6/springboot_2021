@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/consumer-layout.html}">
+
+<head>
+    <title th:text="${CONTENT_TITLE}"></title>
+
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" href="../../../css/my-css/custom-cart.css">
+        <link rel="stylesheet" href="../../../css/my-css/toast.css">
+        <link rel="stylesheet" th:href="@{css/my-css/check-out.css}">
+        <link rel="stylesheet" th:href="@{css/my-css/loading-page.css}">
+    </th:block>
+
+</head>
+<body>
+<div layout:fragment="body">
+    <div class="loader">
+        <span class="fas fa-spinner loading iconloading"></span>
+    </div>
+    <!-- Start All Title Box -->
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Đặt Hàng</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/home}">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Đặt hàng</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+
+    <!-- Start Cart  -->
+    <div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-lg-6 mb-3">
+                    <div class="checkout-address">
+                        <div class="title-left">
+                            <h3>Thông Tin Nhận Hàng</h3>
+                        </div>
+                        <form class="needs-validation" method="post" id="userDelivery">
+                            <div class="mb-3">
+                                <label for="fullName">Họ và tên *</label>
+                                <div class="input-group">
+                                    <!--/*@thymesVar id="user" type=""*/-->
+                                    <th:block th:if="${null != user}" th:object="${user}">
+                                        <input type="text" class="form-control" id="fullName" placeholder=""
+                                               th:value="${user.fullName}"
+                                               required>
+                                    </th:block>
+                                    <th:block th:if="${null == user}">
+                                        <input type="text" class="form-control" id="fullName"
+                                               placeholder="Nhập họ và tên người nhận"
+                                               required>
+                                    </th:block>
+                                    <div class="invalid-feedback" style="width: 100%;"> Không được để trống trường này!
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="address">Số điện thoại *</label>
+                                <th:block th:if="${null != user}">
+                                    <input type="text" class="form-control" id="phoneNumber" placeholder=""
+                                           th:value="${user.phone}" required>
+                                </th:block>
+                                <th:block th:if="${null == user}">
+                                    <input type="text" class="form-control" id="phoneNumber"
+                                           placeholder="Nhập số điện thoại người nhận"
+                                           required>
+                                </th:block>
+                                <div class="invalid-feedback"> Vui lòng nhập số điện thoại người nhận.</div>
+                            </div>
+                            <div class="row no-gutters">
+                                <div class="col-md-4 mb-3">
+                                    <label for="province">Thành phố/Tỉnh *</label>
+                                    <select class=" wide w-100" id="province">
+                                    </select>
+                                    <div class="invalid-feedback"> Vui lòng chọn tỉnh/thành.</div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="district">Quận/Huyện *</label>
+                                    <select class="wide w-100" id="district">
+                                    </select>
+                                    <div class="invalid-feedback"> Vui lòng chọn quận/huyện.</div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="ward">Phường/Xã *</label>
+                                    <select class="wide w-100" id="ward" required></select>
+                                    <div class="invalid-feedback"> Vui lòng chọn phường/xã.</div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="address">Địa chỉ *</label>
+                                <textarea id="address" required class="w-100"
+                                          placeholder="Nhập địa chỉ cụ thể: 47/16 đường số 10....">
+                                </textarea>
+                                <div class="invalid-feedback"> Vui lòng chọn cung cấp địa chỉ cụ thể như số nhà.</div>
+                            </div>
+                            <hr class="mb-4">
+                            <div class="title"><span>Thanh toán</span></div>
+                            <div class="d-block my-3">
+                                <div class="custom-control custom-radio">
+                                    <i class="fas fa-wallet"></i>
+                                    <input id="cash" name="paymentMethod" type="radio" class="custom-control-input"
+                                           checked required>
+                                    <label class="custom-control-label" for="cash">Trực Tiếp</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <i class="fab fa-cc-paypal"></i>
+                                    <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input"
+                                           required>
+                                    <label class="custom-control-label" for="paypal">Paypal</label>
+                                </div>
+                            </div>
+                            <hr class="mb-1">
+                            <div class="col-12 d-flex shopping-box mt-5 justify-content-center"><a id="btnOrder"
+                                                                                                   type="button"
+                                                                                                   class="btn hvr-hover justify-content-center mt-5 text-light">Tiến
+                                hành đặt
+                                hàng</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6 mb-3">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="shipping-method-box">
+                                <div class="title-left">
+                                    <h3>Giao hàng</h3>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="custom-control custom-radio">
+                                        <input id="shippingOption1" name="shipping-option" class="custom-control-input"
+                                               checked="checked" type="radio">
+                                        <label class="custom-control-label" for="shippingOption1">Giao Hàng Tiêu
+                                            Chuẩn</label> <span class="float-right font-weight-bold">Miễn phí</span>
+                                    </div>
+                                    <div class="ml-4 mb-2 small">(3-7 ngày làm việc)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12">
+                            <div class="odr-box">
+                                <div class="title-left">
+                                    <h3>Thông tin kiện hàng</h3>
+                                </div>
+                                <div id="order-content" class="rounded p-2 bg-light">
+                                    <!--                                        <th:block th:each="c:${}">-->
+                                    <!--                                            <div class="media mb-2 border-bottom">-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="media-body">-->
+                                    <!--                                                <div class="row">-->
+                                    <!--                                                    <div class="col-3">-->
+                                    <!--                                                        <a href="">-->
+                                    <!--                                                            &lt;!&ndash;/*@thymesVar id="getProduct" type=""*/&ndash;&gt;-->
+                                    <!--                                                            <img th:src="${c.getProduct().getImg().getHost()+c.getProduct().getImg().getRelativePath()}"-->
+                                    <!--                                                                 class="img-fluid" alt="">-->
+                                    <!--                                                        </a>-->
+                                    <!--                                                    </div>-->
+                                    <!--                                                    <div class="col-9 text-left">-->
+                                    <!--                                                        <a href="" th:text="${c.getProduct().getName()}"></a>-->
+                                    <!--                                                        <div class="small text-muted">Giá: <span class="product-price"-->
+                                    <!--                                                                                                 th:text="${c.getTotalPrice()}"></span>-->
+                                    <!--                                                            <span-->
+                                    <!--                                                                    class="mx-2">|</span> Số lượng: <span-->
+                                    <!--                                                                    th:text="${c.getAmount()}"></span>-->
+                                    <!--                                                            <span class="mx-2">|</span> Đơn Giá: <span-->
+                                    <!--                                                                    class="product-price"-->
+                                    <!--                                                                    th:text="${c.getProduct().getPrice()}"></span>/cái-->
+                                    <!--                                                        </div>-->
+                                    <!--                                                    </div>-->
+                                    <!--                                                </div>-->
+                                    <!--                                            </div>-->
+                                    <!--                                        </th:block>-->
+                                    <!--                                    </th:block>-->
+
+                                    <!--                                    <th:block th:if="${session.currentUser == null}"-->
+                                    <!--                                              th:each="c:${session.cartSession.listItems}">-->
+                                    <!--                                        <div class="media mb-2 border-bottom">-->
+                                    <!--                                        </div>-->
+                                    <!--                                        <div class="media-body">-->
+                                    <!--                                            <div class="row">-->
+                                    <!--                                                <div class="col-3">-->
+                                    <!--                                                    <a href="">-->
+                                    <!--                                                        &lt;!&ndash;/*@thymesVar id="getProduct" type=""*/&ndash;&gt;-->
+                                    <!--                                                        <img th:src="${c.getProductImg()}"-->
+                                    <!--                                                             class="img-fluid" alt="">-->
+                                    <!--                                                    </a>-->
+                                    <!--                                                </div>-->
+                                    <!--                                                <div class="col-9 text-left">-->
+                                    <!--                                                    <a href="" th:text="${c.getProductName()}"></a>-->
+                                    <!--                                                    <div class="small text-muted">Giá: <span class="product-price"-->
+                                    <!--                                                                                             th:text="${c.getTotalPrice()}"></span>-->
+                                    <!--                                                        <span-->
+                                    <!--                                                                class="mx-2">|</span> Số lượng: <span-->
+                                    <!--                                                                th:text="${c.getAmount()}"></span>-->
+                                    <!--                                                        <span class="mx-2">|</span> Đơn Giá: <span class="product-price"-->
+                                    <!--                                                                                                   th:text="${c.getPriceProduct()}"></span>/cái-->
+                                    <!--                                                    </div>-->
+                                    <!--                                                </div>-->
+                                    <!--                                            </div>-->
+                                    <!--                                        </div>-->
+                                    <!--                                    </th:block>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-12">
+                        <div class="order-box">
+                            <div class="title-left">
+                                <h3>Đơn hàng của bạn</h3>
+                            </div>
+                            <div class="d-flex">
+                                <h4>Tạm tính</h4>
+                                <div class="ml-auto font-weight-bold product-price" id="totalAll"></div>
+                            </div>
+                            <div class="d-flex">
+                                <h4>Giảm giá</h4>
+                                <div class="ml-auto font-weight-bold product-price" id="discountPrice"></div>
+                            </div>
+                            <hr class="my-1">
+                            <div class="d-flex">
+                                <h4>Phí vận chuyển</h4>
+                                <div class="ml-auto font-weight-bold product-price" id="shipCodPrice"></div>
+                            </div>
+                            <div class="d-flex">
+                                <h4>Thành tiền</h4>
+                                <div class="ml-auto font-weight-bold product-price" id="lastPrice1"></div>
+                            </div>
+                            <hr>
+                            <div class="d-flex gr-total">
+                                <h5>Tổng tiền</h5>
+                                <div class="ml-auto h5 product-price" id="lastPrice2"></div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="toast"></div>
+</div>
+<!-- End Cart -->
+
+
+</div>
+
+
+<!-- ALL JS FILES -->
+<th:block layout:fragment="scripts">
+    <script src="../../../js/my-js/format-price-of-product.js"></script>
+    <script src="../../../js/my-js/auto-increment-price.js"></script>
+    <script src="../../../js/my-js/toast.js"></script>
+    <script th:src="@{js/Jquery.autoResize.js}"></script>
+    <script th:src="@{js/vietnamlocalselector.js}"></script>
+    <script th:src="@{/js/my-js/order-action-version2.js}"></script>
+    <!--    <script th:src="@{js/my-js/checkout.js}"></script>-->
+    <!--    <script th:src="@{/js/my-js/box-cart-right.js}"></script>-->
+    <script th:src="@{/js/my-js/loading-page.js}"></script>
+    <script>
+        $("textarea").autoResize();
+        var localpicker = new LocalPicker({
+            province: "#province",
+            district: "#district",
+            ward: "#ward"
+        });
+        $('document').ready(function () {
+            $('textarea').each(function () {
+                    $(this).val($(this).val().trim());
+                }
+            );
+        });
+    </script>
+</th:block>
+
+</body>
+
+</html>

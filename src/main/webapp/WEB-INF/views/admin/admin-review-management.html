@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/admin-layout.html}" th:with="isHomePage=true">
+
+<th:block layout:fragment="css">
+    <style>
+        .toast {
+            animation: slideLeft ease 1.5s, fadeOut linear 1s 5s forwards !important;
+        }
+    </style>
+</th:block>
+
+<body class="sb-nav-fixed">
+<main layout:fragment="body">
+    <main class="c-main">
+        <div class="container-fluid pt-5">
+            <h1 class="mt-4">Quản lý đánh giá</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Danh mục quản lý <i class="fas fa-chevron-right p-1"></i>
+                    <b>Đánh giá</b>
+                </li>
+            </ol>
+            <!-- table data -->
+            <div class="container p-0">
+                <div class="fade-in">
+                    <div class="card">
+                        <div class="card-header">
+                            <span><i class="fa fa-users mr-1"></i>Danh sách đánh giá</span>
+                        </div>
+                        <div class="card-body">
+                            <div id="DataTables_Table_0_wrapper"
+                                 class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                <div class="row mb-4">
+                                    <div class="fomr-group form-inline col-sm-12 col-md-6">
+                                        <div class="dataTables_length" id="DataTables_Table_0_length">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text"
+                                                   placeholder="Nhập thông tin người dùng (tên, email,...)"
+                                                   aria-label="Search" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-success" type="button"><i
+                                                        class="fas fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-bordered col-md-12" id="dataTable"
+                                               cellspacing="0">
+                                            <thead class="col-md-12 thead align-middle text-center">
+                                            <tr>
+                                                <th class="col-md-2 col3">Tên khách hàng</th>
+                                                <th class="col-md-3 col3">Sản phẩm</th>
+                                                <th class="col-md-2 col2">Nội dung đánh giá</th>
+                                                <th class="col-md-1 col2">Ngày đánh giá</th>
+                                                <th class="col-md-1 col1">Điểm đánh giá</th>
+                                                <th class="col-md-3 col2">Ẩn/Hiện</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="col-md-12">
+                                            <!-- tr1 -->
+                                            <tr th:each="review:${reviews}">
+                                                <td class="text-center align-middle col-md-2">
+                                                    <b th:text="${review.user.fullName}"></b>
+                                                </td>
+                                                <td class="text-center align-middle col-md-3">
+                                                    <div class="col-md-12">
+                                                    <img class="col-md-6 p-0 m-0" style="height: 100px; width: 100px; float: left;" th:src = "${review.product.img.host+review.product.img.relativePath}">
+                                                    <p class="col-md-6" style="float: right;" th:text="${review.product.name}"></p>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center align-middle col-md-2" th:text="${review.content}">
+                                                </td>
+                                                <td class="text-center align-middle col-md-3"
+                                                    th:text="${review.createdDate}">
+
+                                                </td>
+                                                <td class="col-md-1 col1 text-center text-wrapper align-middle">
+                                                    <span class="badge badge-success"
+                                                          th:text="${review.stars+ '/5 point'}"></span>
+                                                </td>
+                                                <td class="col-md-1 text-center text-wrapper align-middle">
+                                                    <a class="btn btnRemove text-light"  th:classappend="${review.active == 1?'btn-danger':'btn-success'}" th:id="${review.id}" th:text="${review.active == 1 ?'Ẩn':'Hiển thị'}"></a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- modal edit user -->
+    </main>
+
+    <div id="toast"></div>
+</main>
+
+<!-- script -->
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/my-js/admin-user-management.js}"></script>
+    <script>
+        $('.btnRemove').click(function () {
+            var id = $(this).prop('id')
+
+            $.ajax({
+                type: 'PUT',
+                data: {id: id},
+                url: "/admin/review/"+id,
+                success: function (rs) {
+                    if (rs === "error") showErrorMessage("Lỗi", "Hệ thống đang gặp sự cố. Thử lại sau!");
+                    if (rs === "success") {
+                        showSuccessMessage("Thành công", "Thay đổi hiển thị đánh giá thành công!", 7000)
+                        var seconds = 1;
+                        setInterval(function () {
+                            if (seconds == 0) {
+                                window.location.href = '/admin/review'
+                            }
+                            seconds--;
+                        }, 1000);
+
+                    }
+                }
+            })
+        })
+    </script>
+</th:block>
+
+</body>
+
+
+</html>

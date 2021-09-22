@@ -1,0 +1,79 @@
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu a::after {
+    transform: rotate(-90deg);
+    position: absolute;
+    right: 3px;
+    top: 40%;
+}
+
+.dropdown-submenu:hover .dropdown-menu,
+.dropdown-submenu:focus .dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute !important;
+    margin-top: -30px;
+    left: 100%;
+}
+
+
+@media (max-width: 992px) {
+    .dropdown-menu {
+        width: 50%;
+    }
+
+    .dropdown-menu .dropdown-submenu {
+        width: auto;
+    }
+}
+.custom-radio .custom-control-label::before {
+    background-color: whitesmoke;
+}
+
+.custom-radio .custom-control-input:checked ~ .custom-control-label::before,
+.custom-radio .custom-control-input:checked ~ .custom-control-label::after {
+    background-color: #b0b435;
+    /* background-image: url(data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%23fff'/%3E%3C/svg%3E); */
+    border-radius: 50%;
+}
+
+.custom-radio .custom-control-input:active ~ .custom-control-label::before {
+    color: #fff;
+    background-color: #b0b435;
+}
+
+.custom-radio .custom-control-input:focus ~ .custom-control-label::before {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(255, 123, 255, 0.25);
+}
+.attr-nav > ul > li > a span.badge {
+    top: 44%;
+    right: 67px;
+    width: 20px;
+    height: 20px;
+    background: #b0b435;
+    padding-top: 6px;
+    border-radius: 50%;
+}
+.side-menu > a:hover span {
+    color: black !important;
+}
+.attr-nav > ul > li > a span.badge:hover {
+    color: black;
+}
+.modal-header {
+    background-color: #b0b435;
+}
+.modal a:hover {
+    color: #b0b435;
+}
+.modal .show-message {
+    font-size: 1.2rem;
+}
+.modal .show-message.error{
+    background-color: #c1002a;
+}
+.modal .show-message.success{
+    background-color: #05c148;
+}

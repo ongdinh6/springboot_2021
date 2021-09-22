@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title th:text="${CONTENT_TITLE}"></title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Site Icons -->
+    <link rel="shortcut icon" th:href="@{'/images/mylogo.png'}" type="image/x-icon">
+    <link rel="apple-touch-icon" th:href="@{'/images/mylogo.png'}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{'/css/bootstrap.min.css'}">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" th:href="@{'/fontawesome/css/all.min.css'}">
+    <!-- Site CSS -->
+    <link rel="stylesheet" th:href="@{'/css/style.css'}">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" th:href="@{'/css/responsive.css'}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{'/css/custom.css'}">
+    <!-- Header CSS -->
+    <link rel="stylesheet" th:href="@{'/css/my-css/header.css'}">
+    <link rel="stylesheet" th:href="@{'/css/my-css/toast.css'}">
+    <th:block layout:fragment="css">
+    </th:block>
+</head>
+<body>
+<header th:replace="static-fragment/header :: header"></header>
+<div>
+    <th:block layout:fragment="body">
+    </th:block>
+    <th:block sec:authorize="!isFullyAuthenticated()">
+        <div th:replace="static-fragment/lrf-modal :: login-modal"></div>
+        <div th:replace="static-fragment/lrf-modal :: register-modal"></div>
+        <div th:replace="static-fragment/lrf-modal :: forgotpass-modal"></div>
+        <div th:replace="static-fragment/lrf-modal :: resetpass-modal"></div>
+    </th:block>
+    <!-- Start Instagram Feed  -->
+    <div class="instagram-box">
+        <div class="text-center text-light">
+            <h1 class="text-light">ĐƯỢC TÀI TRỢ BỞI CÁC ĐỐI TÁC UY TÍN</h1>
+            <h3 class="text-light">Cửa hàng cung cấp các sản phẩm đến từ các thương hiệu lớn hiện có trên thị
+                trường
+            </h3>
+        </div>
+        <div class="main-instagram owl-carousel owl-theme mt-5">
+            <div class="item">
+                <div class="ins-inner-box">
+                            <img th:src="@{/images/brand/samsung.jpg}" alt=""/>
+                            <div class="hov-in">
+                                <a href="#">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img th:src="@{/images/brand/huawei.jpg}" alt=""/>
+                    <div class="hov-in">
+                        <a href="#">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img th:src="@{/images/brand/oppo.png}" alt=""/>
+                    <div class="hov-in">
+                        <a href="#">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img th:src="@{/images/brand/vivo.jpg}" alt=""/>
+                    <div class="hov-in">
+                        <a href="#">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img th:src="@{/images/brand/realme.png}" alt=""/>
+                    <div class="hov-in">
+                        <a href="#">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img th:src="@{/images/brand/vsmart.png}" alt=""/>
+                    <div class="hov-in">
+                        <a href="#">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img th:src="@{/images/brand/xiaomi.jpg}" alt=""/>
+                    <div class="hov-in">
+                        <a href="#">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end slider tai tro -->
+    <div th:replace="static-fragment/footer :: footer">
+    </div>
+    <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+    <!-- Start copyright  -->
+    <div class="footer-copyright">
+        <p class="footer-company">All Rights Reserved. &copy; 2021
+            <a href="#">DHMobile</a>
+            Design By :
+            <a href="https://html.design/">A Result From Google Search</a>
+        </p>
+    </div>
+    <!-- End copyright  -->
+
+
+
+
+    <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <!-- ALL PLUGINS -->
+    <script th:src="@{/js/jquery.superslides.min.js}"></script>
+    <script th:src="@{/js/bootstrap-select.js}"></script>
+    <script th:src="@{/js/inewsticker.js}"></script>
+    <script th:src="@{/js/bootsnav.js}"></script>
+    <script th:src="@{/js/images-loded.min.js}"></script>
+    <script th:src="@{/js/isotope.min.js}"></script>
+    <script th:src="@{/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/baguetteBox.min.js}"></script>
+    <script th:src="@{/js/form-validator.min.js}"></script>
+    <script th:src="@{/js/contact-form-script.js}"></script>
+    <script th:src="@{/js/custom.js}"></script>
+    <script th:src="@{/js/my-js/slider-home-page.js}"></script>
+    <script th:src="@{/js/my-js/toast.js}"></script>
+
+<!--    some script for cart-->
+    <script th:src="@{js/my-js/format-price-of-product.js}"></script>
+    <!--    get cart-->
+<!--    <script th:src="@{js/my-js/auto-increment-price.js}"></script>-->
+<!--    <script th:src="@{/js/my-js/get-cart.js}"></script>-->
+<!--    <script th:src="@{/js/my-js/box-cart-right.js}"></script>-->
+    <script th:src="@{/js/my-js/cart-action-version2.js}"></script>
+
+    <th:block th:if="${session.currentUser == null}">
+        <script th:src="@{/js/my-js/lrf-modal.js}"></script>
+    </th:block>
+    <th:block layout:fragment="scripts">
+    </th:block>
+</body>
+</html>

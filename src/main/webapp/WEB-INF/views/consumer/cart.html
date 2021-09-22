@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/consumer-layout.html}"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <title th:text="${CONTENT_TITLE}"></title>
+
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" href="../../../css/my-css/custom-cart.css">
+        <link rel="stylesheet" href="../../../css/my-css/toast.css">
+    </th:block>
+</head>
+<body>
+<!-- Start block body -->
+<div layout:fragment="body">
+    <!-- Start All Title Box -->
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Chi Tiết Giỏ Hàng</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/home}">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Giỏ hàng</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+
+    <!-- Start Cart  -->
+    <div class="cart-box-main pt-5 pb-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+                        <table class="table border">
+                            <thead>
+                            <tr class="text-center">
+                                <th>Thông tin sản phẩm</th>
+                                <th></th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Tổng cộng</th>
+                                <th>Xóa</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbody-cart">
+<!--                            <th:block th:if="${null != session.currentUser}">-->
+<!--                                <tr-->
+<!--                                        th:each="cartItem : ${session.currentUser.getCartItems()}"-->
+<!--                                        th:class="'text-center tr-update tr'+${cartItem.getProduct().getId()}"-->
+<!--                                        >-->
+<!--                                    <td class="thumbnail-img">-->
+<!--                                        <a href="#">-->
+<!--                                            <img class="img-fluid"-->
+<!--                                                 th:src="${cartItem.getProduct().getImg().getHost()+cartItem.getProduct().getImg().getRelativePath()}"-->
+<!--                                                 alt=""/>-->
+<!--                                        </a>-->
+<!--                                    </td>-->
+<!--                                    <td class="text-left font-weight-bold text-dark">-->
+<!--                                        <a class="product-name" th:text="${cartItem.getProduct().getName()}">-->
+<!--                                        </a>-->
+<!--                                    </td>-->
+<!--                                    <td class="price-pr">-->
+<!--                                        <p class="product-price current-price-product"-->
+<!--                                           th:text="${cartItem.getProduct().getPrice()}"-->
+<!--                                           th:value="${cartItem.getProduct().getPrice()}"-->
+<!--                                           th:id="${cartItem.getProduct().getId()}"></p>-->
+<!--                                    </td>-->
+<!--                                    <td class="quantity-box">-->
+<!--                                        <input type="number" size="4" th:value="${cartItem.getAmount()}" min="1"-->
+<!--                                               step="1"-->
+<!--                                               class="c-input-text qty text"></td>-->
+<!--                                    <td class="total-pr">-->
+<!--                                        <p class="product-price total-by-product"-->
+<!--                                           th:text="${cartItem.getTotalPrice()}"-->
+<!--                                           th:id="${'totalProductPriceAfterUpdate'+cartItem.getProduct().getId()}"></p>-->
+<!--                                    </td>-->
+<!--                                    <td class="remove-pr">-->
+<!--                                        <a href="#" data-toggle="modal" class="remove-action"-->
+<!--                                           th:alt="${cartItem.getTotalPrice()}"-->
+<!--                                           data-target="#removeCartItemModal" th:value="${cartItem.getProduct().getId()}"-->
+<!--                                           th:name="${cartItem.getAmount()}">-->
+<!--                                            <i class="fas fa-times" th:value="${cartItem.getProduct().getId()}"></i>-->
+<!--                                        </a>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </th:block>-->
+<!--                            <th:block th:if="${null == session.currentUser}">-->
+<!--                                <tr th:object="${cartSession}"-->
+<!--                                    th:each="cartItem : ${cartSession}"-->
+<!--                                    th:class="'text-center tr-update tr'+${cartItem.productID}">-->
+<!--                                    <td class="thumbnail-img">-->
+<!--                                        <a href="#">-->
+<!--                                            <img class="img-fluid"-->
+<!--                                                 th:src="${cartItem.productImg}"-->
+<!--                                                 alt=""/>-->
+<!--                                        </a>-->
+<!--                                    </td>-->
+<!--                                    <td class="text-left font-weight-bold text-dark">-->
+<!--                                        <a class="product-name" th:text="${cartItem.productName}">-->
+
+<!--                                        </a>-->
+<!--                                    </td>-->
+<!--                                    <td class="price-pr">-->
+<!--                                        <p class="product-price current-price-product"-->
+<!--                                           th:id="${cartItem.productID}"></p>-->
+<!--                                    </td>-->
+<!--                                    <td class="quantity-box">-->
+<!--                                        <input type="number" size="4" th:value="${cartItem.amount}" min="1"-->
+<!--                                               step="1"-->
+<!--                                               class="c-input-text qty text"></td>-->
+<!--                                    <td class="total-pr">-->
+<!--                                        <p class="product-price total-by-product"-->
+<!--                                           th:text="${cartItem.totalPrice}"-->
+<!--                                           th:id="${'totalProductPriceAfterUpdate'+cartItem.productID}"></p>-->
+<!--                                    </td>-->
+<!--                                    <td class="remove-pr">-->
+<!--                                        <a href="#" data-toggle="modal" class="remove-action"-->
+<!--                                           th:alt="${cartItem.totalPrice}"-->
+<!--                                           data-target="#removeCartItemModal" th:value="${cartItem.productID}"-->
+<!--                                           th:name="${cartItem.amount}">-->
+<!--                                            <i class="fas fa-times" th:value="${cartItem.productID}"></i>-->
+<!--                                        </a>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </th:block>-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row my-5">
+                <div class="col-lg-6 col-sm-6">
+                    <div class="coupon-box">
+                        <div class="input-group input-group-sm">
+                            <input class="form-control" placeholder="Nhập mã giảm giá tại đây" aria-label="Coupon code"
+                                   type="text">
+                            <div class="input-group-append">
+                                <button class="btn btn-theme" type="button">Mã giảm giá</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row col-lg-6 col-sm-6 m-0">
+                    <div class="col-lg-3 col-sm-12"></div>
+                    <div class="border col-lg-9 col-sm-12 p-0">
+                        <h1 class="bg-dark text-light p-3">Thông tin hóa đơn</h1>
+                        <div class="order-box p-3">
+                            <div class="d-flex">
+                                <h4>Tổng cộng</h4>
+                                <th:block th:if="${null != session.currentUser}">
+                                    <div class="ml-auto font-weight-bold product-price total-all-price"
+                                         th:text="${session.currentUser.getTotalPrice()}"></div>
+                                </th:block>
+                                <th:block th:if="${null == session.currentUser}">
+                                    <div class="ml-auto font-weight-bold product-price total-all-price">
+                                    </div>
+                                </th:block>
+                            </div>
+                            <div class="d-flex">
+                                <h4>Giảm giá</h4>
+                                <div class="ml-auto font-weight-bold product-price discount-price" th:text="0"></div>
+                            </div>
+                            <hr class="my-1">
+                            <div class="d-flex">
+                                <h4>Phí vận chuyển</h4>
+                                <div class="ml-auto font-weight-bold"><small>Miễn phí</small></div>
+                            </div>
+                            <hr>
+                            <div class="d-flex gr-total">
+                                <h5>Thành tiền</h5>
+                                <th:block th:if="${null!= session.currentUser}">
+                                    <div class="ml-auto h5 product-price last-price"
+                                         th:text="${session.currentUser.getTotalPrice()}"></div>
+                                </th:block>
+                                <th:block th:if="${null == session.currentUser}">
+                                    <div class="ml-auto h5 product-price last-price"></div>
+                                </th:block>
+                            </div>
+                            <div class="d-flex gr-total">
+                                <small>*Đã bao gồm VAT</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 d-flex shopping-box mt-3"><a th:href="@{checkout}"
+                                                                    class="ml-auto btn hvr-hover">Đặt hàng</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- my modal confirm remove cart item-->
+        <!-- Modal -->
+        <div class="modal fade" id="removeCartItemModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header d-flex">
+                        <div class="imgQuestion"></div>
+                        <h2 class="modal-title p-1" id="exampleModalLabel">Xác nhận</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body modalConfirmDeleteBody">
+                        Bạn muốn xóa sản phẩm này khỏi giỏ hàng!
+                        <div id="content-cart-item" class="d-none">
+                            <span id="amountRemove"></span>
+                            <span id="resetAmount"></span>
+                            <span id="totalPriceBefore"></span>
+                            <span id="priceRemove"></span>
+                            <span id="resetTotalPrice"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="notDelete" class="rounded-0 btn btn-secondary" data-dismiss="modal">
+                            Không
+                        </button>
+                        <button type="button" id="btnDeleteModalConfirm" class="btn hvr-hover text-light" value="0">
+                            Xóa
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end my modal confirm remove cart item-->
+    </div>
+    <!-- End Cart -->
+    <!--   Toast show message when delete     -->
+    <div id="toast">
+
+    </div>
+    <!--   End Toast     -->
+</div>
+<!-- end block body -->
+
+<!-- block file script for shop page -->
+<th:block layout:fragment="scripts">
+
+</th:block>
+</body>
+
+</html>

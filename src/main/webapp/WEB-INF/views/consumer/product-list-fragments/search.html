@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="category-search" class="product-item-filter row no-gutters ">
+    <div class="col-3 text-center text-sm-left px-1 ">
+        <div class="toolbar-sorter-right">
+            <select id="search-brand" class="selectpicker show-tick form-control">
+                <option value="" data-display="Select">Hãng</option>
+                <option th:each="brand:${allBrands}" th:value="${brand.id}" th:text="${brand.name}"
+                ></option>
+            </select>
+        </div>
+    </div>
+    <div class="col-3 text-center text-sm-left px-1 ">
+        <div class="toolbar-sorter-right">
+            <select id="search-pin" class="selectpicker show-tick form-control">
+                <option value="" data-display="Select">Pin</option>
+                <option th:each="pin:${allPins}" th:value="${pin.id}" th:text="${pin.capacity}"></option>
+            </select>
+        </div>
+    </div>
+    <div class="col-3 text-center text-sm-left px-1 ">
+        <div class="toolbar-sorter-right">
+            <select id="search-ram" class="selectpicker show-tick form-control">
+                <option value="" data-display="Select">Ram</option>
+                <option th:each="ram:${allRams}" th:value="${ram.id}" th:text="${ram.capacity}"
+                ></option>
+            </select>
+        </div>
+    </div>
+    <div class="col-3 text-center text-sm-left px-1 ">
+        <div class="toolbar-sorter-right">
+            <select id="search-rom" class="selectpicker show-tick form-control">
+                <option value="" data-display="Select">Rom</option>
+                <option th:each="rom:${allRoms}" th:value="${rom.id}" th:text="${rom.capacity}"></option>
+            </select>
+        </div>
+    </div>
+</div>
+<div th:fragment="name-sort-search" class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left">
+    <div class="product-categori">
+        <div class="search-product">
+            <form action="#">
+                <input id="search-name" class="form-control" placeholder="Tìm kiếm ..." type="text">
+                <button id="search" type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+        <div class="filter-sidebar-left">
+            <div class="title-left">
+                <h3 class="text-right">SẮP XẾP</h3>
+            </div>
+            <div class="my-3">
+                <div class="toolbar-sorter-right sort">
+                    <select id="sort-type" class="selectpicker show-tick form-control">
+                        <option value=""  data-display="Select">SẮP XẾP THEO</option>
+                        <option value="1">Theo Giá</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="toolbar-sorter-right sort">
+                <select id="sort-order" class="selectpicker show-tick form-control">
+                    <option value="" data-display="Select">THỨ TỰ SẮP XẾP
+                    </option>
+                    <option value="1">Tăng Dần</option>
+                    <option value="2">Giảm Dần</option>
+                </select>
+            </div>
+        </div>
+        <!--        <div class="filter-price-left">-->
+        <!--            <div class="title-left">-->
+        <!--                <h3>Price</h3>-->
+        <!--            </div>-->
+        <!--            <div class="price-box-slider">-->
+        <!--                <div id="slider-range"></div>-->
+        <!--                <p>-->
+        <!--                    <input type="text" id="amount" readonly-->
+        <!--                           style="border:0; color:#fbb714; font-weight:bold;">-->
+        <!--                    <button class="btn hvr-hover" type="submit">Filter</button>-->
+        <!--                </p>-->
+        <!--            </div>-->
+        <!--        </div>-->
+    </div>
+</div>
+
+
+</html>

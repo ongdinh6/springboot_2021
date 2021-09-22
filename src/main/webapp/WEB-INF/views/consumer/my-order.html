@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/consumer-layout.html}" th:with="isUserPage=true">
+
+<head>
+    <title th:text="${CONTENT_TITLE}"></title>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/my-css/custom-my-order-v2.css}">
+
+    </th:block>
+
+
+</head>
+<body>
+<th:block layout:fragment="body">
+    <div class="order-manager-content">
+        <!-- Start All Title Box -->
+        <div class="all-title-box">
+            <div class="container">
+                <div class="row">
+                    <div class="box-manager col-lg-12">
+                        <h2>Đơn hàng của tôi</h2>
+
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a th:href="@{/home}">Trang chủ</a></li>
+                            <li class="breadcrumb-item"><a th:href="@{/user/my-account}" class="option-my-account">My
+                                Account</a></li>
+                            <li class="breadcrumb-item active">Đơn hàng của tôi</li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End All Title Box -->
+        <div class="main">
+            <div class="m-3">
+                <div class="container box-bar bg-dark text-light p-4">
+                    <h1 class="text-light">
+                        Quản lý đơn hàng
+                    </h1>
+                    Danh sách các đơn hàng đã đặt.<br/>
+                    Lưu ý*: Chỉ những đơn hàng ở trạng thái đang tiếp nhận mới có thể hủy đơn hàng! Nhấn vào xem chi
+                    tiết để hủy đơn hàng.
+                </div>
+            </div>
+            <!-- table order -->
+            <div class="mb-5">
+                <div class="container p-0 table-data">
+                    <!--start filter for table -->
+                    <div class="table-filter table-wrapper d-flex w-100">
+                        <div class="row p-0 m-0 col-lg-12 col-sm-12 col-md-12">
+                            <div class="filter-left float-left">
+                                <div class="show-entries col-md-12 d-flex">
+                                    <span class="col-3 pt-1">Hiển thị</span>
+                                    <select class="form-control col-4" id="limitShow">
+                                        <option>5</option>
+                                        <option>10</option>
+                                        <option>15</option>
+                                        <option>20</option>
+                                    </select>
+                                    <span class="col-5 pt-1">đơn hàng/trang</span>
+                                </div>
+                            </div>
+                            <div class="filter-search float-right">
+                                <div class="filter col-sm-12 col-md-12 p-0 m-0 float-right d-flex text-end">
+                                    <div class="d-flex float-left col-6 align-middle">
+                                        <span class="filter-icon pt-1"><i class="fa fa-filter"></i></span>
+                                        <div class="filter-group d-flex align-middle col-11">
+                                            <label class="col-6 p-0 m-0 d-flex align-middle"><span class="pt-1">Trạng
+                                                    thái đơn hàng</span></label>
+                                            <select class="form-control col-7" id="statusOrderSelect">
+                                                <option value="all">Tất cả</option>
+                                                <option value="Giao thành công">Giao thành công</option>
+                                                <option value="Đang giao hàng">Đang giao hàng</option>
+                                                <option value="Đang tiếp nhận">Đang tiếp nhận</option>
+                                                <option value="Đã hủy">Đã hủy</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex float-end form-group justify-content-end form-inline col-6 p-0">
+                                        <div class="filter-group float-left ml-4 w-75 p-0">
+                                            <label></label>
+                                            <input type="text" class="form-control rounded-0 w-100" hint="Tìm kiếm"
+                                                   id="searchByIdOrder"
+                                                   placeholder="Nhập mã đơn hàng">
+                                        </div>
+                                        <button type="button"
+                                                class="btn button-search hvr-hover text-light float-right w-25"
+                                                id="btnSearchByOrderID"><i
+                                                class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end filter for table -->
+                    <table class="table border table-border table-hover align-middle">
+                        <thead class="table-header text-center">
+                        <th class="fields-order col1">Mã</th>
+                        <th class="fields-order text-left col3">Thông tin sản phẩm</th>
+                        <th class="fields-order col2">Ngày đặt hàng</th>
+                        <th class="fields-order col2">Tổng tiền</th>
+                        <th class="fields-order col2">Trạng thái đơn hàng</th>
+                        <th class="fields-order col1">Action</th>
+                        </thead>
+                        <tbody id="tbody-order" class="table-body text-center">
+                        <!-- start tr1 -->
+                        <!--/*@thymesVar id="orders" type="java"*/-->
+<!--                        <tr class="order-item" th:each="orderItem : ${orders}">-->
+<!--                            <th:block th:if="${orderItem.getActive() == 1}">-->
+<!--                                <td class="data-fields col1 align-middle"><b class="order-id"-->
+<!--                                                                             th:text="${orderItem.getId()}"></b>-->
+<!--                                </td>-->
+<!--                                <td class="data-fields col3">-->
+<!--                                    <a class="go-detail-mobile"-->
+<!--                                       th:href="'/product/detail/'+${orderItem.getOrderDetails().get(0).product.getId()}">-->
+<!--                                        <div class="d-flex">-->
+<!--                                            &lt;!&ndash; IMG PRODUCT &ndash;&gt;-->
+<!--                                            <div class="img-product">-->
+<!--                                                <img th:src="${orderItem.getOrderDetails().get(0).product.getImg().getHost()+orderItem.getOrderDetails().get(0).product.getImg().getRelativePath()}"-->
+<!--                                                     height="80" width="80">-->
+<!--                                            </div>-->
+<!--                                            &lt;!&ndash; END IMG &ndash;&gt;-->
+<!--                                            &lt;!&ndash; START SOMETEXT DETAIL ORDER &ndash;&gt;-->
+<!--                                            <div class="text-left">-->
+<!--                                                <p>Đơn hàng bao gồm <b class="first-product-name"-->
+<!--                                                                       th:text="${orderItem.getOrderDetails().get(0).getProduct().getName()}"></b>-->
+<!--                                                    và <b class="size-1-order-amount"-->
+<!--                                                          th:text="${orderItem.getOrderDetails().size()-1}"></b> sản-->
+<!--                                                    phẩm khác-->
+<!--                                                </p>-->
+<!--                                            </div>-->
+<!--                                            &lt;!&ndash; END SOMETEXT DETAIL ORDER &ndash;&gt;-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                </td>-->
+<!--                                <td class="data-fields col2 order-date"-->
+<!--                                    th:text="${orderItem.getCreatedDate()}"></td>-->
+<!--                                <td class="data-fields col2"><b class="product-price order-total-price"-->
+<!--                                                                th:text="${orderItem.getTotalPrice()}"></b></td>-->
+<!--                                <td class="data-fields col2"><span th:class="${'status-order-' +orderItem.getId()}"-->
+<!--                                                                   th:text="${orderItem.getOrderStatus()}"></span>-->
+<!--                                </td>-->
+<!--                                <td class="data-fields col1 text-center">-->
+<!--                                    <a href="#" class="view" title="" data-toggle="tooltip"-->
+<!--                                       data-original-title="Xem chi tiết"><i data-toggle="modal"-->
+<!--                                                                             th:data-target="${'#exampleModal'+orderItem.getId()}"-->
+<!--                                                                             class="fas fa-arrow-circle-right icon modal-del"-->
+<!--                                                                             th:id="${'modal-'+orderItem.getId()}"></i></a>-->
+<!--                                </td>-->
+<!--                            </th:block>-->
+<!--                        </tr>-->
+                        </tbody>
+                    </table>
+                    <!-- start paging -->
+<!--                <div th:replace="/consumer/product-list-fragments/pagination :: pagination"></div>-->
+                    <!-- end paging -->
+                </div>
+            </div>
+        </div>
+        <!-- end main order by status -->
+        <div id="toast"></div>
+        <!-- End main content -->
+    </div>
+    <!-- end body content order -->
+    <div th:replace="static-fragment/modal-order-detail::modal-order-detail"></div>
+</th:block>
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/my-js/format-price-of-product.js}"></script>
+    <script th:src="@{/js/my-js/toast.js}"></script>
+    <script th:src="@{/js/my-js/loading-page.js}"></script>
+    <script th:src="@{/js/my-js/order-action-version2.js}"></script>
+</th:block>
+</body>
+
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/admin-layout.html}" th:with="isHomePage=true">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/admin-static/my/css/admin-index.css}">
+    <link rel="stylesheet" th:href="@{/css/my-css/toast.css}">
+    <style>
+        .toast {
+            animation: slideLeft ease 1.5s, fadeOut linear 1s 5s forwards !important;
+        }
+    </style>
+</th:block>
+<body>
+<main layout:fragment="body">
+    <main class="c-main">
+        <div class="container-fluid pt-5">
+            <h1 class="mt-4">Quản lý thương hiệu</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Danh mục quản lý <i class="fas fa-chevron-right p-1"></i>
+                    <span>Tags</span><i class="fas fa-chevron-right p-1"></i>
+                    <b>Thương hiệu</b>
+                </li>
+            </ol>
+            <!-- table data -->
+            <div class="container p-0">
+                <div class="fade-in">
+                    <div class="card">
+                        <div class="card-header">
+                            <span><i class="fas fa-list-ul mr-1"></i>Danh sách thương hiệu (1/1)</span>
+                            <button type="button" class="btn btn-success float-right" data-toggle="modal"
+                                    data-target="#exampleModalCenter">
+                                <i class="fas fa-plus"></i>
+                                Thêm mới thương hiệu
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="DataTables_Table_0_wrapper"
+                                 class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                <div class="row mb-4">
+                                    <div class="fomr-group form-inline col-sm-12 col-md-6">
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text"
+                                                   placeholder="Nhập thông tin thương hiệu (tên, mã,...)"
+                                                   aria-label="Search" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-success" type="button"><i
+                                                        class="fas fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-bordered col-md-12" id="dataTable"
+                                               cellspacing="0">
+                                            <thead class="col-md-12 thead align-middle text-center">
+                                            <tr>
+                                                <th class="col-md-1 col2">Mã</th>
+                                                <th class="col-md-1 col3">Logo</th>
+                                                <th class="col-md-3 col2">Tên thương hiệu</th>
+                                                <th class="col-md-1 col1">Active</th>
+                                                <th class="col-md-1 col2">Edit/Remove</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="col-md-12">
+                                            <!-- tr1 -->
+                                            <tr th:each="brand:${brands}">
+                                                <td class="text-center align-middle col-md-1 col2"><b
+                                                        class="col-md-3" th:text="${brand.id}"></b>
+                                                </td>
+                                                <td class="text-center align-middle col-md-3 col2">
+                                                    <img th:each="imageURL : ${#strings.arraySplit(brand.logo, '')}"
+                                                         th:if="${imageURL[0].equals('i')}"
+                                                         th:src="'https://st5group08.000webhostapp.com/'+${brand.logo}"/>
+                                                    <img th:each="imageURL : ${#strings.arraySplit(brand.logo, '')}"
+                                                         th:if="${!imageURL[0].equals('i')}"
+                                                         th:src="*{'data:image/jpeg;base64,'+brand.logo}"/>
+                                                </td>
+                                                <td class="text-center align-middle col-md-3 col2"
+                                                    th:text="${brand.name}">
+
+                                                </td>
+                                                <td
+                                                        class="col-md-1 col1 text-center text-wrapper align-middle">
+                                                    <span th:classappend="${brand.active == 1 ? 'badge badge-success' :'badge badge-danger'}"
+                                                          th:text="${brand.active == 1? 'Active' : 'Inactive'}"></span>
+                                                </td>
+                                                <td class="col-md-1 col2 text-center text-wrapper align-middle">
+                                                    <a class="btn btn-success text-light"
+                                                       data-toggle="modal" th:data-target="${'#exampleModalLong'+brand.id}">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a class="btn btn-danger text-light btnRemoveBrand"
+                                                       th:value="${brand.id}" data-toggle="modal"
+                                                       data-target="#exampleModalConfirmDelete">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- paging -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- modal add new brand -->
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Thông tin thương hiệu</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- start form product info-->
+                            <form th:action="@{brands/new}" th:object="${brandDTO}" method="post"
+                                  enctype="multipart/form-data">
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <div class="input-group form-group mb-1">
+                                            <div class="input-group-prepend">
+                                                <input type="file" th:field="${brandDTO.logo}" class="input-group"
+                                                       id="btnUploadImage">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputBrandName">Tên thương hiệu</label>
+                                        <input type="text" th:field="${brandDTO.name}" class="form-control"
+                                               id="inputBrandName"
+                                               placeholder="Nhập tên thương hiệu">
+                                        <p style="color: red;" th:if="${#fields.hasErrors('name')}"
+                                           th:class="${#fields.hasErrors('name')}? error" th:errors="*{name}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Active</label>
+                                    <select class="form-control" th:field="${brandDTO.active}">
+                                        <option th:value="1">Active</option>
+                                        <option th:value="0">Disable</option>
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-success">Lưu thay đổi</button>
+                                </div>
+                            </form>
+                            <!-- end form product info -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end div modal product info-->
+            <!-- modal edit info tags-->
+            <th:block th:each="brand:${brands}">
+            <div  class="modal fade" th:id="${'exampleModalLong'+brand.id}" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Thông tin thương hiệu</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- start form product info-->
+                            <form enctype="multipart/form-data">
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <div class="input-group form-group mb-1">
+                                            <div class="input-group mb-2">
+                                                <input type="file" th:onchange="@{'previewFile('+${brand.id}+')'}" class="input-group" th:id="${'imgUploadEdit'+brand.id}">
+                                                <small class="error error-img-tags" ></small>
+                                            </div>
+                                            <span class="float-left">Ảnh Thương Hiệu</span>
+                                            <div class="input-group form-group justify-content-center">
+                                                <img class="border" th:each="imageURL : ${#strings.arraySplit(brand.logo, '')}"
+                                                     th:if="${imageURL[0].equals('i')}"
+                                                     th:src="'https://st5group08.000webhostapp.com/'+${brand.logo}"/>
+                                                <img th:id="${'img'+brand.id}" class="border" th:each="imageURL : ${#strings.arraySplit(brand.logo, '')}"
+                                                     th:if="${!imageURL[0].equals('i')}" width="115px" height="45px"
+                                                     th:src="*{'data:image/jpeg;base64,'+brand.logo}"/>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label>Tên thương hiệu</label>
+                                        <input type="text" class="form-control" th:value="${brand.name}"
+                                               th:id="${'inputBrandNameEdit'+brand.id}"
+                                               placeholder="Nhập tên thương hiệu">
+                                        <small class="error error-name-tags" ></small>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Active</label>
+                                    <select class="form-control" th:id="${'activeBrandEdit'+brand.id}">
+                                        <option th:selected="${brand.active == 1 ? true : false}" value="1">Active</option>
+                                        <option th:selected="${brand.active != 1 ? true : false}" value="0">Inactive</option>
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+                                    <button type="button" class="btn btn-success btnUpdateInfoTag" th:value="${brand.id}">Lưu thay đổi</button>
+                                </div>
+                            </form>
+                            <!-- end form product info -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end modal edit info tags-->
+            </th:block>
+        </div>
+    </main>
+</main>
+<th:block layout:fragment="scripts">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script th:src="@{/js/my-js/admin-tags-management.js}"></script>
+    <script th:src="@{/js/my-js/toast-setup.js}"></script>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,29 @@
+.gender-text {
+    line-height: 2.5;
+}
+
+.userinfo-form {
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+}
+
+.text-form-title {
+    color: white;
+}
+
+.my-account-text {
+    padding-top: 10px;
+    border-bottom: dashed;
+}
+
+.cate-widget {
+    font-size: 17px;
+}
+
+.action-active {
+    color: green;
+}
+
+.my-account-action-icon {
+    color: #b0b435;
+}
